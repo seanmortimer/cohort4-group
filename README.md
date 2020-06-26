@@ -6,12 +6,12 @@ This is the group repository for SQL and Python in EvolveU Cohort 4.
 ## Contributors:
 
 - Uranka Bazarsad - [github.com/urankab](github.com/urankab)
-- Stephen Brousseau - (github.com/sbrew)
-- Douglas Dougan - github.com/djdougan
-- Sean Mortimer - github.com/seanmortimer
-- Eleonora Ollaik - github.com/eleonora-ollaik
-- Rob Soza - github.com/robsoza
-- Zack Wang  -  github.com/Zackwang07
+- Stephen Brousseau - [github.com/sbrew](github.com/sbrew)
+- Douglas Dougan - [github.com/djdougan](github.com/djdougan)
+- Sean Mortimer - [github.com/seanmortimer](github.com/seanmortimer)
+- Eleonora Ollaik - [github.com/eleonora-ollaik](github.com/eleonora-ollaik)
+- Rob Soza - [github.com/robsoza](github.com/robsoza)
+- Zack Wang  -  [github.com/Zackwang07](github.com/Zackwang07)
 
 
 ## Tools Used:
