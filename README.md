@@ -17,8 +17,8 @@ This is the group repository for SQL and Python in EvolveU Cohort 4.
 ## Tools Used:
 
 ### SQL
-- PostgreSQL - postgresql.org
-- pgAdmin - pgadmin.org
+- PostgreSQL - [postgresql.org]
+- pgAdmin - [pgadmin.org]
 
 ### Python
 - TBD
