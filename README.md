@@ -5,8 +5,8 @@ This is the group repository for SQL and Python in EvolveU Cohort 4.
 
 ## Contributors:
 
-- Uranka Bazarsad - github.com/urankab
-- Stephen Brousseau - github.com/sbrew
+- Uranka Bazarsad - [github.com/urankab](github.com/urankab)
+- Stephen Brousseau - (github.com/sbrew)
 - Douglas Dougan - github.com/djdougan
 - Sean Mortimer - github.com/seanmortimer
 - Eleonora Ollaik - github.com/eleonora-ollaik
