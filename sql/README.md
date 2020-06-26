@@ -1,27 +1,17 @@
 
-# EvolveU Group Work
+# Known Super Villains
 
-This is the group repository for SQL and Python in EvolveU Cohort 4.
+### A relational SQL database of current known super villains and their associates
 
-## Contributors:
-
-- Uranka Bazarsad - github.com/urankab
-- Stephen Brousseau - github.com/sbrew
-- Douglas Dougan - github.com/djdougan
-- Sean Mortimer - github.com/seanmortimer
-- Eleonora Ollaik - github.com/eleonora-ollaik
-- Rob Soza - github.com/robsoza
-- Zack Wang  -  github.com/Zackwang07
-
+## Sources:
+- [Batman 60's TV Wiki](https://batman60stv.fandom.com/)
+- [DC Database](https://dc.fandom.com/wiki/Batman_(1966_TV_Series))
 
 ## Tools Used:
 
 ### SQL
 - PostgreSQL - postgresql.org
 - pgAdmin - pgadmin.org
-
-### Python
-- TBD
 
 
 
