@@ -5,7 +5,7 @@
 
 ![Image of database diagram](./villainDB_Diagram.png)
 
-Database diagram: dbdiagram.io/d/5ef536429ea313663b3b1477
+Database diagram: https://dbdiagram.io/d/5ef536429ea313663b3b1477
 
 ## Sources:
 - [Batman 60's TV Wiki](https://batman60stv.fandom.com/)
