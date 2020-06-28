@@ -3,6 +3,8 @@
 
 ### A relational SQL database of current known super villains and their associates
 
+![Image of database diagram](./villainDB_Diagram.png)
+
 ## Sources:
 - [Batman 60's TV Wiki](https://batman60stv.fandom.com/)
 - [DC Database](https://dc.fandom.com/wiki/Batman_(1966_TV_Series))
@@ -10,8 +12,9 @@
 ## Tools Used:
 
 ### SQL
-- PostgreSQL - postgresql.org
-- pgAdmin - pgadmin.org
+- DBDiagram - [dbdiagram.io](https://dbdiagram.io/home)
+- PostgreSQL - [postgresql.org](https://postgresql.org)
+- pgAdmin - [pgadmin.org](https://pgadmin.org)
 
 
 
