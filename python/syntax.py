@@ -13,9 +13,15 @@ def bools(bool):
     else :
         return 'You answered false'
 
-def sumLists(list):
+def sum_lists(list):
     return sum(list)
 
 def showName(person):
     return person["name"]
 
+def email(fName, lName):
+    return f'{fName}.{lName}@python.com'.lower()
+
+
+def tax_calculator(gross):
+    pass

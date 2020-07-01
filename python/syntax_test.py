@@ -19,8 +19,8 @@ def test_bools():
     assert syntax.bools(False) == 'You answered false'
 
 def test_lists():
-    assert syntax.sumLists([1, 2, 3]) == 6
-    assert syntax.sumLists([10, 10, 10]) == 30
+    assert syntax.sum_lists([1, 2, 3]) == 6
+    assert syntax.sum_lists([10, 10, 10]) == 30
 
 def test_showName():
     person1 = {'name': 'Sean', 'hobby': 'bikes', 'favNum': 24}
@@ -28,6 +28,10 @@ def test_showName():
     assert syntax.showName(person1) == 'Sean'
     assert syntax.showName(person2) == 'Joker'
 
-def test_testTest():
-    assert 5 == 5
-    assert 1 == 2
+def test_email():
+    assert syntax.email('Sean', 'Mortimer') == 'sean.mortimer@python.com'
+    assert syntax.email('Michael', 'Scott') == 'michael.scott@python.com'
+    assert syntax.email('William', 'Merckxx') == 'william.merckxx@python.com'
+
+def test_tax_calculator():
+    pass
