@@ -84,19 +84,32 @@ def forLoop():
     for friend in friends:
         return friend
 
+
 # while
 
-
 def whileLoop(num):
-    goal = 7
-    # print(("would you like to play? (Y/n) "))
-    user_input = input("Would you like to play? (y/n) ")
-    if user_input == "n":
-        return "see ya later"
-    else:
-        while user_input != "n":
-            print("Guess the number:")
-            return "pressed y"
+    if num == 0: 
+        return 'I skipped the loop and counted to 0!'
+
+    count = 0
+    while count < num:
+        count += 1
+    return f"I counted to {count}!"
+
+
+
+# Currently don't know how to test inputs! 
+# (pretty sure I need to mock them)
+# def whileLoop(num):
+    # goal = 7
+    # # print(("would you like to play? (Y/n) "))
+    # user_input = input("Would you like to play? (y/n) ")
+    # if user_input == "n":
+    #     return "see ya later"
+    # else:
+    #     while user_input != "n":
+    #         print("Guess the number:")
+    #         return "pressed y"
     #         user_number = int(num)
     #         if user_number == goal:
     #             print("you guessed right")
@@ -111,6 +124,6 @@ def whileLoop(num):
     #         return "see ya later"
     
 
-print(whileLoop(3))
+# print(whileLoop(3))
 # do while
 # forEach (with array and function) ??not in python??
