@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 # brackets format: (rate, upper_limit)
 tax_brackets = [
     # (0, 0),
@@ -10,34 +12,19 @@ tax_brackets = [
 
 
 def tax_calc(gross):
-    owed = 0
+    owed_int = 0
     lower_limit = 0
-    x = gross
-    (last_rate, last_max ) = tax_brackets[0]
-    # last_max 
-    # index = 0
-    # while x > 0:
+    (last_rate, last_max) = tax_brackets[0]
 
     for (rate, max) in tax_brackets:
-        if x > max:
-            # index =+ 1
-            x -= last_max
-
-            owed += (x * rate / 100) 
-
-            # lower_limit = max
-            # last_rate = rate
-           
+        if gross > max:
+            owed_int = owed_int + rate * (max * 100 - lower_limit * 100) / 100
+            lower_limit = max
         else:
-            owed += round((x * rate / 100), 2)
-            # print(owed)
+            x = (gross * 100 - lower_limit * 100)
+            owed_int = (owed_int + (x * (rate) / 100 )) 
+            owed = round(owed_int) / 100
             return owed
-    return owed
-        
-
-          
-
-tax_calc(48536)
 
 #  15% on the first $48,535 of taxable income, plus
 # 20.5% on the next $48,534 of taxable income (on the portion of taxable income over 48,535 up to $97,069), plus
