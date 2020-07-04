@@ -1,4 +1,6 @@
 import syntax
+import unittest
+from unittest.mock import patch
 
 
 def test_helloworld():
@@ -60,3 +62,11 @@ def test_forInLoop():
 def test_whileLoop():
     assert(syntax.whileLoop(2) == 'You are under')
     assert(syntax.whileLoop(12) == 'You are over')
+
+# only works with -pytest -s
+# def test_whileLoop2():
+#     assert(syntax.whileLoop2() == 'You got it! 2 guesses')
+
+
+def test_whileLoop3():
+    assert(syntax.whileLoop3(1) == 3)

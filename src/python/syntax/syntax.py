@@ -103,3 +103,30 @@ def whileLoop(input):
         return 'You are under'
     while input > number:
         return 'You are over'
+
+
+# do while loop
+def whileLoop2():
+    number = 10
+    guesses = 0
+    guess = int(input('Guess a number between 1-15: '))
+    while guess != number:
+        if guess < number:
+            print('Your guess was too low')
+            guesses += 1
+            guess = int(input('Guess again: '))
+        elif guess > number:
+            print('Your guess was too high')
+            guesses += 1
+            guess = int(input('Guess again: '))
+    if guess == number:
+        return f'You got it! {guesses} guesses'
+
+
+def whileLoop3(num):
+    spam = 0
+    total = num
+    while spam < 2:
+        total += 1
+        spam += 1
+    return total
