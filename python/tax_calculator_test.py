@@ -18,4 +18,5 @@ def test_tax_calc():
     assert tax_calc.tax_calc(214369) == 49644.64
     assert tax_calc.tax_calc(1E6) == 308902.87
     
-
+def test_tax():
+    assert 1 == 1
