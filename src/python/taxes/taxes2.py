@@ -1,22 +1,28 @@
-def taxFunctions(salary):
-    taxBrackets = [
-        {'bracket': 45838, 'multiplier': 0.15},
-        {'bracket': 97069, 'multiplier': .205, 'minus': 48535, 'add': 7280.25},
-        {'bracket': 150473, 'multiplier': .26, 'minus': 97069, 'add': 17229.72},
-        {'bracket': 214368, 'multiplier': .29, 'minus': 150473, 'add': 31114.76},
-        # {'multiplier': .33, 'minus': 214368, 'add': 49644.31}
-    ]
+import math
 
-    # totalTax = 0
-
-    # bracket1 = (taxBrackets[0]['bracket'])  # 45868
-    # bracket2 = (taxBrackets[1]['bracket'])  # 97069
-    # bracket3 = (taxBrackets[2]['bracket'])  # 150473
-    # bracket4 = (taxBrackets[3]['bracket'])  # 214368
-
-    for bracket in taxBrackets:
-        if salary <= bracket['bracket']:
-            print(bracket['bracket'])
+# brackets format: (rate, upper_limit)
+tax_brackets = [
+    (15, 48535),
+    (20.5, 97069),
+    (26, 150473),
+    (29, 214368),
+    (33, float('inf')),
+]
 
 
-taxFunctions(20000)
+def tax_calc(gross):
+    owed_int = 0
+    lower_limit = 0
+    # (last_rate, last_max) = tax_brackets[0]
+
+    for (rate, max) in tax_brackets:
+        if gross > max:
+            owed_int = owed_int + rate * (max * 100 - lower_limit * 100) / 100
+            lower_limit = max
+        else:
+            x = (gross * 100 - lower_limit * 100)
+            owed_int = (owed_int + (x * (rate) / 100))
+            owed = owed_int / 100
+            # netSalary = gross - owed
+            # return round(netSalary, 2)
+            return round(owed, 2)

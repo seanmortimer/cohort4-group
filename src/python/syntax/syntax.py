@@ -8,6 +8,10 @@ def hello():
     return ('hello')
 
 
+def email(firstName, lastName):
+    return f'{firstName.lower()}.{lastName.lower()}@gmail.com'
+
+
 # variables and numbers
 
 def multiply(x, y):
@@ -70,9 +74,13 @@ def arrayUpdate(arr, x, newThing):
 
 # dictionary
 
-def dicList(name, age):
+def dictList(name, age):
     dictionaryList = {'name': name, 'age': age}
     return dictionaryList
+
+
+def dictList2(dictList, searchName):
+    return dictList[searchName]
 
 
 # if /else loop

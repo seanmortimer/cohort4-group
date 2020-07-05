@@ -1,10 +1,12 @@
 import syntax
-import unittest
-from unittest.mock import patch
 
 
 def test_helloworld():
     assert(syntax.hello() == 'hello')
+
+
+def test_email():
+    assert(syntax.email('Larry', 'Shumlich') == 'larry.shumlich@gmail.com')
 
 
 def test_multiply():
@@ -47,8 +49,13 @@ def test_arrayUpdate():
     assert(syntax.arrayUpdate([1, 2, 3], 0, 4) == [4, 2, 3])
 
 
-def test_dicList():
-    assert(syntax.dicList('Uranka', 23) == {'name': 'Uranka', 'age': 23})
+def test_dictList():
+    assert(syntax.dictList('Uranka', 23) == {'name': 'Uranka', 'age': 23})
+
+
+def test_dictList2():
+    assert(syntax.dictList2(
+        {'name': 'Uranka', 'age': 12}, 'name') == 'Uranka')
 
 
 def test_ifElseLoop():
