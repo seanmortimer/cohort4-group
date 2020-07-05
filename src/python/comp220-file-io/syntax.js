@@ -9,7 +9,7 @@ const syntax = {
         return str.toUpperCase();
     },
 
-    //Boolean & If/else: Takes a string and checks if it matches the word 'dog'
+    //Boolean & If: Takes a string and checks if it matches the word 'dog'
     isDog: (str) => {
         if (str === 'dog') {
             return true;
@@ -99,8 +99,4 @@ const syntax = {
     },
 }
 
-
-
-
 export default syntax;
-

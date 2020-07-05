@@ -1,6 +1,51 @@
-# determine number of lines and display it
-# how many 'else' statements?
-# how many characters in total?
+import os
 
-f = open('syntax.js', 'r')
-print(f.read())
+
+def countLines():
+    line = open('syntax.js').readlines()
+    count = len(line)
+    print('Total number of lines is:', count)
+
+# countLines()
+
+
+def countElse():
+    count = 0
+    searchFor = 'else'
+    with open('syntax.js') as file:
+        for line in file:
+            if searchFor in line:
+                count += 1
+    print(f'There are {count} else statements')
+
+
+# countElse()
+
+def countChars():
+    file = open('syntax.js', 'r')
+    data = file.read()
+    charCount = len(data)
+    print(f'There are {charCount} characters in syntax.js')
+
+# countChars()
+
+# list of all files in a directory
+# read all the files and their sizes from a directory
+# print report showing number of files and the total size of the directory
+
+
+def listOfFiles():
+    path = '/code/cohort4/01-getting-started/src/scripts'
+    entries = os.listdir(path)
+    dirSize = os.path.getsize(path)
+    fileCount = 0
+
+    print(f'Directory size: {dirSize} # of files: {fileCount}')
+
+    for entry in entries:
+        fileSize = os.path.getsize(path + '/' + entry)
+        fileCount += 1
+        print(f'File name: {entry} ~ Size: {fileSize} bytes')
+
+
+listOfFiles()
