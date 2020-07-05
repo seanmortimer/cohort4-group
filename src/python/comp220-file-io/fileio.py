@@ -29,10 +29,6 @@ def countChars():
 
 # countChars()
 
-# list of all files in a directory
-# read all the files and their sizes from a directory
-# print report showing number of files and the total size of the directory
-
 
 def listOfFiles():
     path = '/code/cohort4/01-getting-started/src/scripts'
@@ -48,4 +44,4 @@ def listOfFiles():
         print(f'File name: {entry} ~ Size: {fileSize} bytes')
 
 
-listOfFiles()
+# listOfFiles()
