@@ -50,5 +50,6 @@ def test_forLoop():
     assert persist.forLoop()=="steve","uranka"
 
 def test_whileLoop():
-    assert persist.whileLoop(5)=='thats a nice number, enter another'
-    # assert persist.whileLoop("Y",1)=="wrong"
+    assert persist.whileLoop(1)==3
+    assert persist.whileLoop(2)==4
+    # assert persist.whileLoop()=="see ya later"
