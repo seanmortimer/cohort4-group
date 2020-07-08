@@ -86,10 +86,10 @@ def readCSV():
                     secCentre += 1
 
             wf.write('--- Class Count --- \n')
-            wf.write(f'Residental: {classResCount} Res Count: {resResCount}\n')
-            wf.write(f'Industrial: {classIndCount} Res Count: {indResCount}\n')
-            wf.write(f'Major Park: {classParkCount} Res Count: {parkResCount}\n')
-            wf.write(f'Residual Sub Area: {classSubCount} Res Count: {subResCount}\n' + ' \n')
+            wf.write(f'Residental: {classResCount} Count: {resResCount}\n')
+            wf.write(f'Industrial: {classIndCount} Count: {indResCount}\n')
+            wf.write(f'Major Park: {classParkCount} Count: {parkResCount}\n')
+            wf.write(f'Residual Sub Area: {classSubCount} Count: {subResCount}\n' + ' \n')
             wf.write('--- Sector Count --- \n')
             wf.write(f'North: {secNorth} NE: {secNE} NW: {secNW} \n')
             wf.write(f'South: {secSouth} SE: {secSE} SW: {secSW} \n')
@@ -98,12 +98,15 @@ def readCSV():
             wf.write(f'Centre: {secCentre} \n' + ' \n')
             wf.write('--- Res Count ---\n'+f'Total Res Count: {resCount} \n')
 
-            return (f'Total: {resCount}\n'
-                + f'Residental: {classResCount} Res Count: {resResCount}\n'
-                + f'Industrial: {classIndCount} Res Count: {indResCount}\n'
-                + f'North: {secSouth} NE: {secNE} NW: {secNW}\n'
-                + f'South: {secSouth} SE: {secSE} SW: {secNE}\n'
-                + f'East: {secEast} West: {secWest} Centre: {secCentre}')
 
+            # file = open('report.txt', 'r')
+            # data = file.read()
+            # if = len(data)
+            # file.close()
+            # return (f'There are {charCount} characters in syntax.js')
             
-# readCSV()
+readCSV()
+
+                # wf.write('Class: ' + line.split(',')[0] + ' '
+                # + 'Sector: ' + line.split(',')[4]  + ' '
+                # + 'Res Count: ' + line.split(',')[9] + '\n')
