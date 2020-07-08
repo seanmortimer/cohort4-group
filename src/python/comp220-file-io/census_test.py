@@ -1,7 +1,5 @@
 import census
 
-totalResCount = 1263734
-
 def test_reportOutput():
     assert (census.readCSV() == 'Total: 1264656\nResidental: 208 Res Count: 1263734\n'
     'Industrial: 42 Res Count: 922\n'
