@@ -4,7 +4,8 @@ import os
 def countLines():
     line = open('syntax.js').readlines()
     count = len(line)
-    print('Total number of lines is:', count)
+    return(f'Total number of lines is: {count}')
+
 
 # countLines()
 
@@ -16,7 +17,7 @@ def countElse():
         for line in file:
             if searchFor in line:
                 count += 1
-    print(f'There are {count} else statements')
+    return(f'There are {count} else statements')
 
 
 # countElse()
@@ -25,7 +26,8 @@ def countChars():
     file = open('syntax.js', 'r')
     data = file.read()
     charCount = len(data)
-    print(f'There are {charCount} characters in syntax.js')
+    return(f'There are {charCount} characters in syntax.js')
+
 
 # countChars()
 
@@ -35,13 +37,17 @@ def listOfFiles():
     entries = os.listdir(path)
     dirSize = os.path.getsize(path)
     fileCount = 0
-
-    print(f'Directory size: {dirSize} # of files: {fileCount}')
+    listofStuff = []
 
     for entry in entries:
         fileSize = os.path.getsize(path + '/' + entry)
         fileCount += 1
         print(f'File name: {entry} ~ Size: {fileSize} bytes')
+        listofStuff.append(f'File name: {entry} ~ Size: {fileSize} bytes')
+
+    print(f'Directory size: {dirSize} # of files: {fileCount}')
+    listofStuff.append(f'Directory size: {dirSize} # of files: {fileCount}')
+    return listofStuff
 
 
 # listOfFiles()

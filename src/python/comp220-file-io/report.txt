@@ -1,0 +1,17 @@
+----- 2018 Census ----- 
+ 
+--- Class Count --- 
+Residental: 208 
+Industrial: 42 
+Major Park: 4 
+Residual Sub Area: 49 
+ 
+--- Sector Count --- 
+North: 105 NE: 44 NW: 30 
+South: 84 SE: 0 SW: 0 
+East: 92 
+West: 68 
+Centre: 63 
+ 
+--- Res Count ---
+Res Count: 1264656
