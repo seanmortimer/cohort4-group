@@ -8,3 +8,8 @@ def test_js_else_counter():
 
 def test_character_counter():
     assert(file_opener.character_counter()=="There are 2879 characters in this file")
+
+def test_file_checker_outer():
+    output = file_opener.file_checker_outer()
+    assert(output[0]=="The directory is 4096 bytes, with 14 files")
+    assert(output[1][1]=="Name: arrays.test.js, Size: 885 bytes")

@@ -13,13 +13,7 @@ import os
 
 # print('Total Number of lines is:' + str(count))
 
-# line_count()
-
-
 # file.close
-
-
-# file = open("syntax.js", "r")
 
 # print(file.readline())
 
@@ -49,3 +43,19 @@ def character_counter():
     numberOfCharacters = len(data)
 
     return(f"There are {numberOfCharacters} characters in this file")
+
+def file_checker_outer():
+    path = '/Code/cohort4/01-getting-started/src/scripts'
+    directorySize= os.path.getsize(path)
+    folder = os.listdir(path)
+    amountOfFiles = 0
+    fileList = []
+
+    for jsFile in folder:
+        sizeOfFile = os.path.getsize(path + '/' + jsFile)
+        amountOfFiles +=1
+        fileList.append(f'Name: {jsFile}, Size: {sizeOfFile} bytes')
+
+    return  (f'The directory is {directorySize} bytes, with {amountOfFiles} files') , fileList
+
+
