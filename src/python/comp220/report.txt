@@ -1,0 +1,20 @@
+--------2018 Calgary Census brought to you by Python--------
+There were 303 lines in the dataset
+There was 1264656 residents during this census
+
+ --------Class Data--------
+Occupied Residential dwellings: 208, Population: 1263734
+Occupied Industrial dwellings: 42, Population: 922
+Major Park dwellings: 4, Population: 0
+Residual Sub Area dwellings: 49, Population: 0
+
+ --------Sector Data--------
+City Centre: 199977
+City North: 160502
+City Northeast: 185534
+City East: 57666
+City Southeast: 135009
+City South: 227345
+City Southwest: 0
+City West: 124497
+City Northwest: 174126
