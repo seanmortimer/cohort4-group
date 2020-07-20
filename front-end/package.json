@@ -24,7 +24,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test  --runInBand",
+    "testnorib": "react-scripts test",
+    "cov": "react-scripts test --coverage --watchAll --runInBand",
+    "covnorib": "react-scripts test --coverage --watchAll",
+    "showcov": "start ./coverage/lcov-report/index.html",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -41,5 +45,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/build/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/index.js",
+      "<rootDir>/src/serviceWorker.js",
+      "<rootDir>/src/assets/"
+    ]
   }
 }
+
