@@ -26,8 +26,9 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import Register from '../Register/Register';
+import Login from '../Login/Login';
 import Checklist from '../Checklist/Checklist';
-import { mainListItems, secondaryListItems } from './listItems';
+import { secondaryListItems } from './listItems';
 
 function Copyright() {
   return (
@@ -183,6 +184,14 @@ export default function Dashboard() {
               <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary="Register" />
+          </ListItem>
+
+          {/* <ListItem button> */}
+          <ListItem button onClick={() => setPage(<Login />)}>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Login" />
           </ListItem>
           {/* <ListItem button> */}
           <ListItem button onClick={() => setPage(<Checklist />)}>
