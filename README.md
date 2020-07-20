@@ -1,7 +1,7 @@
 
 # EvolveU Group Work
 
-This is the group repository for SQL and Python in EvolveU Cohort 4.
+This is the group repository for our to be named Covid-19 sign-in app for businesses.
 
 ## Contributors:
 
@@ -9,7 +9,6 @@ This is the group repository for SQL and Python in EvolveU Cohort 4.
 - Stephen Brousseau - [github.com/sbrew](https://github.com/sbrew)
 - Douglas Dougan - [github.com/djdougan](https://github.com/djdougan)
 - Sean Mortimer - [github.com/seanmortimer](https://github.com/seanmortimer)
-- Eleonora Ollaik - [github.com/eleonora-ollaik](https://github.com/eleonora-ollaik)
 - Rob Soza - [github.com/robsoza](https://github.com/robsoza)
 - Zack Wang  -  [github.com/Zackwang07](https://github.com/Zackwang07)
 
