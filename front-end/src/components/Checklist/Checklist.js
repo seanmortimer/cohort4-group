@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { List, ListItem } from '@material-ui/core';
 
 // TODO: Add stepper component to show progress
 
@@ -26,6 +27,11 @@ const checklist = [
       'Chills',
       'Painful swallowing',
       'Runny Nose or Nasal Congestion',
+    ],
+  },
+  {
+    question: 'Are you experiencing any of the following symptoms:',
+    list: [
       'Feeling unwell / Fatigued',
       'Nausea / Vomiting / Diarrhea',
       'Unexplained loss of appetite',
@@ -75,10 +81,15 @@ export default function Checklist() {
 
   const handleNext = () => 0;
 
-  const handleList = () => {
-    console.log('handle it');
-    return 'a string';
-  }
+  const handleList = (i) => {
+    // console.log('handle it');
+    const listItems = checklist[i].list.map(
+      (item) =>
+        <ListItem key={i}>·{item}</ListItem>,
+    );
+
+    return <List>{listItems}</List>;
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -92,7 +103,7 @@ export default function Checklist() {
         </Typography>
         <h1>{checklist[0].question}</h1>
         <form className={classes.form} noValidate>
-          {handleList}
+          {handleList(0)}
           <Grid container justify="space-between">
             <Button
               type="button"
