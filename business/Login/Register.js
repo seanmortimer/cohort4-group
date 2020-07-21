@@ -1,5 +1,5 @@
 import postData from "../postData.js";
-import User from "../User.js";
+import User from "../User.js.js";
 class Register {
   register(first_name, last_name, email, password, retype_password) {
     let user;
