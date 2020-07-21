@@ -1,11 +1,11 @@
 class User {
-  constructor(first_name, last_name,email, phone, password) {
-    this.id = id;
+  constructor(first_name, last_name, email, phone, password) {
+    this.id = "";
     this.email = email;
     this.first_name = first_name;
     this.last_name = last_name;
     this.phone = phone;
-    this.password = password
+    this.password = password;
   }
 
   getFirstName() {
@@ -38,10 +38,11 @@ class User {
     this.phone = value;
   }
 
-  User.prototype.toString() {
-      return this.getLastName() +", " + this.getFirstName() +", "  + this.getPhone();
+  toString() {
+    return (
+      this.getLastName() + ", " + this.getFirstName() + ", " + this.getPhone()
+    );
   }
-
 }
 
 export default User;

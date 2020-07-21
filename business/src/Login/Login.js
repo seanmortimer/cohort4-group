@@ -1,22 +1,22 @@
-import postData from '../postData.js'
-
+import { postData } from "../postData.js";
 
 class Login {
   constructor() {
     this.email = "";
     this.password = "";
-    this.access_token = ;
+    this.access_token = {};
     this.isLoggedIn = False;
   }
 
   Login(email, password, url) {
     this.email = email;
     this.password = password;
-    post.Data.postData(url, 
-        { username: this.username, password: this.passwor  })
-        .then((data) => {
-            console.log(data); // JSON data parsed by `data.json()` call
-        });
+    post.Data.postData(url, {
+      username: this.username,
+      password: this.password,
+    }).then((data) => {
+      console.log(data); // JSON data parsed by `data.json()` call
+    });
   }
 
   getCredentials() {
@@ -24,7 +24,7 @@ class Login {
   }
 
   setCredentials(value) {
-    this.access_token = { };
+    this.access_token = {};
   }
 
   signOut() {
@@ -33,5 +33,5 @@ class Login {
     this.access_token = {};
     this.isLoggedIn = False;
   }
-
 }
+export default Login;
