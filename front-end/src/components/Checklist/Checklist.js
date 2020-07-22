@@ -81,11 +81,11 @@ export default function Checklist() {
 
   const handleNext = () => 0;
 
-  const handleList = (i) => {
+  const handleList = (x) => {
     // console.log('handle it');
-    const listItems = checklist[i].list.map(
+    const listItems = checklist[x].list.map(
       (item) =>
-        <ListItem key={i}>·{item}</ListItem>,
+        <ListItem>·{item}</ListItem>,~~
     );
 
     return <List>{listItems}</List>;
