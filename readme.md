@@ -1,7 +1,7 @@
 
-# EvolveU Group Work
+# SpaceTrace
 
-This is the group repository for our to be named Covid-19 sign-in app for businesses.
+This is the group repository for our SpaceTrace Covid-19 sign-in app for businesses.
 We are using a React front-end and an AWS Lambda serverless back-end with AWS DynamoDB.
 
 
