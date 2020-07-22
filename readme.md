@@ -1,58 +1,46 @@
 
-This file should be viewed from [github](https://github.com/seanmortimer/cohort4-group). Do not view from an editor.
+# EvolveU Group Work
 
-This project is the "Final Project" project for the EvovleU Full Stack Development program. It is a baseline to demonstrate:
-
-- development environment
-- development tools
-- best practices
-- REST APIs with Flask and Python
-- React app
-
-## Required Tools
-
-See the README.md for the main repository for tool setup instructions in [github](https://github.com/seanmortimer/cohort4-group).
+This is the group repository for our to be named Covid-19 sign-in app for businesses.
+We are using a React front-end and an AWS Lambda serverless back-end with AWS DynamoDB.
 
 
-## Setup Instructions
+## Contributors:
 
-Once all the base tools are installed this is the instructions to run the first sample project.
+- Uranka Bazarsad - [github.com/urankab](https://github.com/urankab)
+- Stephen Brousseau - [github.com/sbrew](https://github.com/sbrew)
+- Douglas Dougan - [github.com/djdougan](https://github.com/djdougan)
+- Sean Mortimer - [github.com/seanmortimer](https://github.com/seanmortimer)
+- Rob Soza - [github.com/robsoza](https://github.com/robsoza)
+- Zack Wang  -  [github.com/Zackwang07](https://github.com/Zackwang07)
 
-1. Install the dependencies required for the project. This command looks at the 'package.json' file and installs all of the dependencies. You must be in the correct directory to run this.  
+
+## Tools Used:
+
+### Project Management:
+
+- Product backlog sheet - [Google Sheet](https://docs.google.com/spreadsheets/d/1yLSO0SD3lY0jSJS1xBpPcPPakNdJUncihNpzdRc0RQg/edit?usp=sharing)
+
+![Product backlog](./assets/images/product_backlog.png)
+
+### Cloud Services: 
+- Serverless Back-end: AWS Lambda - [aws.amazon.com/lambda](https://aws.amazon.com/lambda)
+- NoSQL Database: AWS DynamoDB - [aws.amazon.com/dynamodb](https://aws.amazon.com/dynamodb)
+- API: AWS API Gateway - [aws.amazon.com/api-gateway](https://aws.amazon.com/api-gateway/)
+
+### Python
+- Python 3.8 - [python.org](https://python.org)
+
+
+
+## Clone this Repository
+
+For the following instructions use your command line. In Windows, it could be dos or PowerShell. For mac and Linux use terminal.
+
+1. Clone this repository. In your command line move to the directory that you would like to use as your base code directory. 
 ```sh
-cd cohort4-group
-
-npm i
-
+git clone https://github.com/seanmortimer/cohort4-group.git
 ```
-2. Run the automated unit tests to ensure the code works as advertised. 
-```sh
-npm pytest
-```
-All the tests should run.
 
-3. Start the application. 
-```sh
-npm start
-live-server
-```
-Look through the application.
+This repository has a number of projects within it. Each folder is a project. See the README.md in each folder for further instructions. 
 
-## Dissecting what's there
-
-1. Notice the directory structure. It may not be exact, but it will be close.
-```
-reference/
-  front-end/
-  node_modules/
-  resources/
-      __init__/
-      checklist.py
-      entry.py
-      user.py
-pipfile
-pipfile.lock
-README.md
-.gitignore
-```
-If you do not see the files that start with '.' you will have to 'show hidden files' in your explorer / file manager.
