@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import postData from '../../business/javascript/fetch';
+import { v4 as uuidv4 } from 'uuid'
 
 const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register() {
   const classes = useStyles();
-  const [userForm, setUserForm] = useState({ user_id: 100 });
+  const [userForm, setUserForm] = useState();
 
   const handleForm = (e) => {
     const form = { ...userForm };
@@ -48,9 +49,9 @@ export default function Register() {
   };
 
   const handleSubmit = () => {
-    postData(postUrl, userForm);
     const form = { ...userForm };
-    form.user_id++;
+    form.user_id = uuidv4();
+    postData(postUrl, form);
   };
 
   return (
