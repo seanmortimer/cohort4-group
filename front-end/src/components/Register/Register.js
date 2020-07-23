@@ -12,8 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { v4 as uuidv4 } from 'uuid';
 import postData from '../../business/javascript/fetch';
-import { v4 as uuidv4 } from 'uuid'
 
 const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
 const useStyles = makeStyles((theme) => ({
@@ -49,8 +49,11 @@ export default function Register() {
   };
 
   const handleSubmit = () => {
-    const form = { ...userForm };
+    // const form = { ...userForm };
+    const { firstName, lastName, ...form } = userForm;
+    form.fullName = `${firstName} ${lastName}`;
     form.user_id = uuidv4();
+    // console.log('form :>> ', form);
     postData(postUrl, form);
   };
 
