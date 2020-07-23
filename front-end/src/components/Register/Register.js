@@ -49,7 +49,6 @@ export default function Register() {
     const form = { ...userForm };
     form[e.target.name] = e.target.value;
     setUserForm(form);
-
   };
 
   const [errorMsg, setErrorMsg] = useState({
@@ -92,7 +91,6 @@ export default function Register() {
       
     }
   };
-
 
   return (
     <Container component="main" maxWidth="xs">
