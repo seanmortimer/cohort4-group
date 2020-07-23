@@ -48,7 +48,22 @@ export default function Register() {
     // console.log('userForm :>> ', userForm);
   };
 
+  const formValidator = () => {
+    if (!firstName) {
+      throw new Error('Name can not be blank')
+    }
+    // if (!lastName) {
+    //   throw new Error('Name can not be blank')
+    // }
+  }
+
+  const validateEmail = (email)  => {
+    const re = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+    return re.test(email.toLowerCase());
+}
+
   const handleSubmit = () => {
+
     // const form = { ...userForm };
     const { firstName, lastName, ...form } = userForm;
     form.fullName = `${firstName} ${lastName}`;
