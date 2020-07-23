@@ -85,7 +85,7 @@ export default function Checklist() {
     // console.log('handle it');
     const listItems = checklist[x].list.map(
       (item) =>
-        <ListItem>·{item}</ListItem>,~~
+        <ListItem>·{item}</ListItem>,
     );
 
     return <List>{listItems}</List>;
