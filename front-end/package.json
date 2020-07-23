@@ -11,7 +11,8 @@
     "clsx": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "@testing-library/user-event": "^12.0.11",
