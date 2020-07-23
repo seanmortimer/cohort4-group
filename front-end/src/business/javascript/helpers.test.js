@@ -1,6 +1,6 @@
-import {validateEmail, validatePassword} from './helpers'
+import { validateEmail, validatePass } from './helpers'
 
-test('should validate email', () => {
+test('Test e-mail validation', () => {
     let email = "tom@gmail.com";
     expect(validateEmail(email)).toBe(true);
     let email2 = "tom@com";
@@ -13,13 +13,11 @@ test('should validate email', () => {
     expect(validateEmail(email5)).toBe(true);
     let email6 = "tomg@mailca";
     expect(validateEmail(email6)).toBe(false);
-    
 })
 
-test('password test', ()=>{
+test('Test password validation ', ()=>{
     let password = "abc123-Ab";
     expect(validatePassword(password, )).toBe(true)
     let password2 = "abc123";
     expect(validatePassword(password2, 8)).toBe(false)
 })
-
