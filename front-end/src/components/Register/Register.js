@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { v4 as uuidv4 } from 'uuid';
 import postData from '../../business/javascript/fetch';
-
+import {validatePassword, validateEmail} from '../../business/javascript/helpers'
 const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,19 +48,19 @@ export default function Register() {
     // console.log('userForm :>> ', userForm);
   };
 
-  const formValidator = () => {
+  const formValidator = (firstName, email) => {
     if (!firstName) {
       throw new Error('Name can not be blank')
     }
-    // if (!lastName) {
-    //   throw new Error('Name can not be blank')
-    // }
+    // // if (!lastName) {
+    // //   throw new Error('Name can not be blank')
+    // // }
+    if(validateEmail(email)){
+      console.log("it work'd")
+    }
   }
 
-  const validateEmail = (email)  => {
-    const re = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
-    return re.test(email.toLowerCase());
-}
+
 
   const handleSubmit = () => {
 
