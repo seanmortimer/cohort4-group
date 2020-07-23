@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue. 
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -81,11 +81,11 @@ export default function Checklist() {
 
   const handleNext = () => 0;
 
-  const handleList = (i) => {
+  const handleList = (x) => {
     // console.log('handle it');
-    const listItems = checklist[i].list.map(
+    const listItems = checklist[x].list.map(
       (item) =>
-        <ListItem key={i}>·{item}</ListItem>,
+        <ListItem>·{item}</ListItem>,
     );
 
     return <List>{listItems}</List>;
