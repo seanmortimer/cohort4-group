@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { v4 as uuidv4 } from 'uuid';
 import postData from '../../business/javascript/fetch';
+import { validateEmail, validatePass } from '../../business/javascript/helpers'
 
 const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
 const useStyles = makeStyles((theme) => ({
@@ -38,38 +39,57 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register() {
   const classes = useStyles();
-  const [userForm, setUserForm] = useState();
+  const [userForm, setUserForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: ''});
 
   const handleForm = (e) => {
     const form = { ...userForm };
     form[e.target.name] = e.target.value;
-    // console.log('e.target.name :>> ', e.target.name);
     setUserForm(form);
-    // console.log('userForm :>> ', userForm);
   };
 
-  const formValidator = () => {
-    if (!firstName) {
-      throw new Error('Name can not be blank')
-    }
-    // if (!lastName) {
-    //   throw new Error('Name can not be blank')
-    // }
-  }
-
-  const validateEmail = (email)  => {
-    const re = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
-    return re.test(email.toLowerCase());
-}
+  const [errorMsg, setErrorMsg] = useState({
+    message: '', firstName: '', lastName: '', email: '', phone: '', password: ''
+  })
 
   const handleSubmit = () => {
-
-    // const form = { ...userForm };
     const { firstName, lastName, ...form } = userForm;
     form.fullName = `${firstName} ${lastName}`;
-    form.user_id = uuidv4();
-    // console.log('form :>> ', form);
-    postData(postUrl, form);
+    let test = { message: '', firstName: '', lastName: '', email: '', phone: '', password: '' }
+    let isValid = true
+
+    if (!userForm.firstName) {
+      test.firstName = 'Please enter your first name'
+      isValid = false
+    }
+    if (!userForm.lastName) {
+      test.lastName = 'Please enter your last name'
+      isValid = false
+    }
+    if (!validateEmail(userForm.email)) {
+      console.log('validating email')
+      console.log(validateEmail(userForm.email))
+      test.email = 'Please enter an e-mail'
+      isValid = false
+    }
+    if (!userForm.phone) {
+      test.phone = 'Please enter your phone number'
+      isValid = false
+    }
+    if (!validatePass(userForm.password, 8)) {
+      test.password = 'Password must be at least 8 characters'
+      isValid = false
+    }
+    setErrorMsg(test)
+    if (isValid) {
+      form.user_id = uuidv4();
+      postData(postUrl, form);
+      // Move to success page
+      
+    }
   };
 
   return (
@@ -98,6 +118,8 @@ export default function Register() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                error={errorMsg.firstName ? true:false}
+                helperText={errorMsg.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -109,6 +131,8 @@ export default function Register() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                error={errorMsg.lastName ? true:false}
+                helperText={errorMsg.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -120,6 +144,8 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                error={errorMsg.email ? true:false}
+                helperText={errorMsg.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -131,6 +157,8 @@ export default function Register() {
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
+                error={errorMsg.phone ? true:false}
+                helperText={errorMsg.phone}
               />
             </Grid>
             <Grid item xs={12}>
@@ -143,6 +171,8 @@ export default function Register() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                error={errorMsg.password ? true:false}
+                helperText={errorMsg.password}
               />
             </Grid>
             <Grid item xs={12}>
