@@ -32,6 +32,7 @@ module.exports = {
     'class-methods-use-this': 0,
     'no-plusplus': ["off", { "allowForLoopAfterthoughts": true }],
     'object-curly-newline': 0,
+    // 'function-paren-newline': ["error", "consistent"],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/prefer-stateless-function': 'off',
     'react/prop-types': 'off',

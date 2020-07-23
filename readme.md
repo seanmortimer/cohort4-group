@@ -1,7 +1,9 @@
 
-# EvolveU Group Work
+# SpaceTrace
 
-This is the group repository for our to be named Covid-19 sign-in app for businesses.
+This is the group repository for our SpaceTrace Covid-19 sign-in app for businesses.
+We are using a React front-end and an AWS Lambda serverless back-end with AWS DynamoDB.
+
 
 ## Contributors:
 
@@ -15,12 +17,19 @@ This is the group repository for our to be named Covid-19 sign-in app for busine
 
 ## Tools Used:
 
-### SQL
-- PostgreSQL - [postgresql.org](https://postgresql.org)
-- pgAdmin - [pgadmin.org](https://pgadmin.org)
+### Project Management:
+
+- Product backlog sheet - [Google Sheet](https://docs.google.com/spreadsheets/d/1yLSO0SD3lY0jSJS1xBpPcPPakNdJUncihNpzdRc0RQg/edit?usp=sharing)
+
+![Product backlog](./assets/images/product_backlog.png)
+
+### Cloud Services: 
+- Serverless Back-end: AWS Lambda - [aws.amazon.com/lambda](https://aws.amazon.com/lambda)
+- NoSQL Database: AWS DynamoDB - [aws.amazon.com/dynamodb](https://aws.amazon.com/dynamodb)
+- API: AWS API Gateway - [aws.amazon.com/api-gateway](https://aws.amazon.com/api-gateway/)
 
 ### Python
-- TBD
+- Python 3.8 - [python.org](https://python.org)
 
 
 
