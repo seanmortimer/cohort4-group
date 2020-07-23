@@ -6,7 +6,12 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-pytest-watch = "*"
+flask = "*"
+flask-jwt = "*"
+flask-restful = "*"
+flask-sqlalchemy = "*"
+psycopg2 = "*"
+
 
 [requires]
 python_version = "3.8"
