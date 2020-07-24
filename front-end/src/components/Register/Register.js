@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { v4 as uuidv4 } from 'uuid';
 import postData from '../../business/javascript/fetch';
 import { validateEmail, validatePass } from '../../business/javascript/helpers'
 
@@ -85,7 +84,6 @@ export default function Register() {
     }
     setErrorMsg(test)
     if (isValid) {
-      form.user_id = uuidv4();
       postData(postUrl, form);
       // Move to success page
       
