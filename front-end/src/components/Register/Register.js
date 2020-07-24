@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import postData from '../../business/javascript/fetch';
+import { postData } from '../../business/javascript/fetch';
 import { validateEmail, validatePass } from '../../business/javascript/helpers'
 
 const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
@@ -82,12 +82,17 @@ export default function Register() {
       test.password = 'Password must be at least 8 characters'
       isValid = false
     }
+
+    console.log(userForm)
+    console.log(form)
     setErrorMsg(test)
     if (isValid) {
       postData(postUrl, form);
       // Move to success page
       
     }
+
+
   };
 
   return (

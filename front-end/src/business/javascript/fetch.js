@@ -20,4 +20,5 @@ const postData = async (url = '', data = {}) => {
   return json;
 };
 
-export default postData;
+
+export { postData };
