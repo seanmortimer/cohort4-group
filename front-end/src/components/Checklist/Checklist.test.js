@@ -34,7 +34,6 @@ test('clicking no moves to next list', () => {
   fireEvent.click(no);
   fireEvent.click(no);
   expect(queryByText(/being investigated or confirmed/i)).toBeInTheDocument();
-
   expect(successMockFn).not.toHaveBeenCalled();
   fireEvent.click(no);
   expect(successMockFn).toHaveBeenCalled();
