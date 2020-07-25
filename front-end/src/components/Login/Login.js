@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Checklist from '../Checklist/Checklist';
 // import { getData } from '../../business/javascript/fetch';
 
 
@@ -35,13 +36,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Login() {
+export default function Login(props) {
     const classes = useStyles();
 
     const [userForm, setUserForm] = useState({
         email: '',
         password: ''
     });
+    const [errorMsg, setErrorMsg] = useState({
+        message: '',
+        email: '',
+        password: ''
+    });
+    
 
 
     const handleForm = (e) => {
@@ -55,15 +62,34 @@ export default function Login() {
         // console.log(form)
     };
 
+
     const handleSubmit = async (e) => {
+        const { email, password } = userForm;
+        let test = { message: '', email: '', password: '' }
+        let isValid = true;
         e.preventDefault()
-        // const { email, password } = userForm
-        const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data';
-        // let data = await getData(url, userForm)
-        let data = fetch(url + `?email=${userForm.email}&password=${userForm.password}`)
-        console.log('userform', userForm)
-        console.log('data', data)
-    }
+        if (!userForm.email) {
+            test.email = 'Please enter a valid Email'
+            isValid = false
+        }
+        if (!userForm.password) {
+            test.password = 'Please enter a valid Password'
+            isValid = false
+        }
+        setErrorMsg(test)
+        if (isValid) {
+            const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data';
+            let data = await fetch(url + `?email=${userForm.email}&password=${userForm.password}`)
+            data = await data.json()
+            console.log('data', data[1])
+            if (data[1]===400){
+                return setErrorMsg({message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.'})
+            } 
+        props.onLoginSuccess();
+        // console.log(props.onLoginSuccess)
+            }
+        }
+    
 
     return (
         <Container component="main" maxWidth="xs">
@@ -74,7 +100,9 @@ export default function Login() {
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Login
+                    
         </Typography>
+        <p>{errorMsg.message}</p>
                 <form className={classes.form} noValidate onChange={handleForm}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -86,6 +114,8 @@ export default function Login() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                error={errorMsg.email ? true : false}
+                                helperText={errorMsg.email}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -98,6 +128,8 @@ export default function Login() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                error={errorMsg.password ? true : false}
+                                helperText={errorMsg.password}
                             />
                         </Grid>
 

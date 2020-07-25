@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Register from './Register';
 import { Container } from '@material-ui/core';
 
@@ -8,10 +8,20 @@ test('the register page renders', () => {
   expect(getAllByText(/sign up/i)[0]).toBeInTheDocument();
 });
 
-test('the email', () => {
+test('test the errors work', () => {
+  const { getAllByText } = render(<Register />);
   expect(getAllByText(/sign up/i)[0]).toBeInTheDocument();
+  fireEvent.click(screen.getAllByRole('button'));
+  // console.log(screen.getAllByRole('button'))
+
+  expect(getAllByText(/please enter your first name/i)[0]).toBeInTheDocument();
 });
 
+function click(txt) {
+  fireEvent.click(
+      screen.getByText(txt)
+  );
+}
 
 
 
