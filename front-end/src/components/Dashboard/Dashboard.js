@@ -183,7 +183,12 @@ export default function Dashboard() {
         <Divider />
         <List>
           {/* <ListItem button> */}
-          <ListItem button onClick={() => setPage(<Register onLoginSuccess={handleLoginSuccess} />)}>
+          <ListItem
+            button
+            onClick={() => setPage(
+              <Register onLoginSuccess={handleLoginSuccess} />,
+            )}
+          >
             <ListItemIcon>
               <ShoppingCartIcon />
             </ListItemIcon>
