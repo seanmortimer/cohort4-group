@@ -34,19 +34,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ChecklistSucces() {
+export default function ChecklistSucces(props) {
   // const [index, setIndex] = useState(0);
   const classes = useStyles();
 
   const handleCancel = () => {
     console.log('Pressed cancel');
-    return;
   };
 
   const handleSignIn = () => {
-    console.log('Pressed sign in')
-    return;
-  }
+    console.log('Pressed sign in');
+    props.onSuccess();
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -76,7 +75,7 @@ export default function ChecklistSucces() {
             className={classes.submit}
             onClick={handleSignIn}
           >
-            Sign In
+            Submit
           </Button>
         </Grid>
       </div>

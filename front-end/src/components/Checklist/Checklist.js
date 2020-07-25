@@ -75,12 +75,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Checklist() {
+export default function Checklist(props) {
   const [index, setIndex] = useState(0);
   const classes = useStyles();
 
   const handleNo = () => {
-    setIndex(index + 1);
+    if (index < checklist.length - 1) {
+      setIndex(index + 1);
+    } else {
+      props.onSuccess();
+    }
   };
 
   const handleList = () => {
