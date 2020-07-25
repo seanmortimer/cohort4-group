@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Register from './Register';
-import { Container } from '@material-ui/core';
+// import { Container } from '@material-ui/core';
 
 test('the register page renders', () => {
   const { getAllByText } = render(<Register />);
@@ -11,7 +11,10 @@ test('the register page renders', () => {
 test('test the errors work', () => {
   const { getAllByText } = render(<Register />);
   expect(getAllByText(/sign up/i)[0]).toBeInTheDocument();
-  fireEvent.click(screen.getAllByRole('button'));
+  
+  // the window error was because getAllBy methods return arrays - sean 
+  fireEvent.click(screen.getAllByRole('button')[0]);
+  // fireEvent.click(screen.getAllByRole('button'));
   // console.log(screen.getAllByRole('button'))
 
   expect(getAllByText(/please enter your first name/i)[0]).toBeInTheDocument();

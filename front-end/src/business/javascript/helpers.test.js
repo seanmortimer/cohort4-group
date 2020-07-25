@@ -17,7 +17,7 @@ test('Test e-mail validation', () => {
 
 test('Test password validation ', ()=>{
     let password = "abc123-Ab";
-    expect(validatePassword(password, )).toBe(true)
+    expect(validatePass(password, 8)).toBe(true)
     let password2 = "abc123";
-    expect(validatePassword(password2, 8)).toBe(false)
+    expect(validatePass(password2, 8)).toBe(false)
 })
