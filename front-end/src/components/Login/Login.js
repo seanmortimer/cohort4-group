@@ -58,6 +58,7 @@ export default function Login(props) {
   };
 
   const handleSubmit = async (e) => {
+    const url = `${props.url}/fetch-data`;
     const { email, password } = userForm;
     const test = { message: '', email: '', password: '' };
     let isValid = true;
@@ -72,14 +73,14 @@ export default function Login(props) {
     }
     setErrorMsg(test);
     if (isValid) {
-      const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data';
       let data = await fetch(`${url}?email=${email}&password=${password}`);
       data = await data.json();
-      console.log('data', data[1]);
+    //   console.log('data', data[1]);
       if (data[1] === 400) {
         return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
       }
-      props.onLoginSuccess();
+      console.log('data :>> ', data);
+      props.onLoginSuccess(data);
       // console.log(props.onLoginSuccess)
     }
   };
