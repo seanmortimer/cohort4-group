@@ -28,6 +28,7 @@ import LayersIcon from '@material-ui/icons/Layers';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Checklist from '../Checklist/Checklist';
+import ChecklistSuccess from '../ChecklistSuccess/ChecklistSuccess';
 import { secondaryListItems } from './listItems';
 
 function Copyright() {
@@ -126,18 +127,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const handleLoginSuccess = () => {
-    setPage(<Checklist />)
-  }
+    setPage(<Checklist />);
+  };
+
+  const handleChecklistSuccess = () => {
+    setPage(<ChecklistSuccess />);
+  };
+
   const [page, setPage] = useState(<Login onLoginSuccess={handleLoginSuccess} />);
-  const classes = useStyles();
   const [open, setOpen] = useState(true);
+  const classes = useStyles();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
 
   return (
     <div className={classes.root}>
@@ -193,7 +198,12 @@ export default function Dashboard() {
             <ListItemText primary="Login" />
           </ListItem>
           {/* <ListItem button> */}
-          <ListItem button onClick={() => setPage(<Checklist />)}>
+          <ListItem
+            button
+            onClick={() => setPage(
+              <Checklist onSuccess={handleChecklistSuccess} />,
+            )}
+          >
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>

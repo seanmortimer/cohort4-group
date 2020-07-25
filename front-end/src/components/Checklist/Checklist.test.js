@@ -3,9 +3,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Checklist from './Checklist';
 
 const { getByText, queryByText, getAllByRole } = screen;
+const successMockFn = jest.fn();
 
 test('renders the page', () => {
-  render(<Checklist />);
+  render(<Checklist onSuccess={successMockFn} />);
 
   expect(getByText(/screening checklist/i)).toBeInTheDocument();
   expect(getByText(/following symptoms:/i)).toBeInTheDocument();
@@ -13,7 +14,7 @@ test('renders the page', () => {
 });
 
 test('clicking no moves to next list', () => {
-  render(<Checklist />);
+  render(<Checklist onSuccess={successMockFn} />);
 
   expect(getByText(/fever/i)).toBeInTheDocument();
   const no = getAllByRole('button')[1];
@@ -34,6 +35,8 @@ test('clicking no moves to next list', () => {
   fireEvent.click(no);
   expect(queryByText(/being investigated or confirmed/i)).toBeInTheDocument();
   
+  expect(successMockFn).not.toHaveBeenCalled();
   fireEvent.click(no);
-  expect(getByText(/Congratulations!/i)).toBeInTheDocument();  
+  expect(successMockFn).toHaveBeenCalled();
 });
+
