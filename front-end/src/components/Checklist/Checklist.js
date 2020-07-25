@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -67,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue. 
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -75,17 +70,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Checklist() {
-  const [question, setQuestion] = useState(checklist[0]);
+export default function Checklist(props) {
+  const [index, setIndex] = useState(0);
   const classes = useStyles();
 
-  const handleNext = () => 0;
+  const handleNo = () => {
+    if (index < checklist.length - 1) {
+      setIndex(index + 1);
+    } else {
+      props.onSuccess();
+    }
+  };
 
-  const handleList = (x) => {
+  const handleList = () => {
     // console.log('handle it');
-    const listItems = checklist[x].list.map(
+    let count = 0;
+    if (!checklist[index].list) {
+      return null;
+    }
+    const listItems = checklist[index].list.map(
       (item) =>
-        <ListItem>·{item}</ListItem>,
+        <ListItem key={count++}>·{item}</ListItem>,
     );
 
     return <List>{listItems}</List>;
@@ -101,7 +106,7 @@ export default function Checklist() {
         <Typography component="h1" variant="h5">
           Covid-19 Screening Checklist
         </Typography>
-        <h1>{checklist[0].question}</h1>
+        <h1>{checklist[index].question}</h1>
         <form className={classes.form} noValidate>
           {handleList(0)}
           <Grid container justify="space-between">
@@ -111,15 +116,16 @@ export default function Checklist() {
               color="primary"
               className={classes.submit}
             >
-              Back
+              Yes
             </Button>
             <Button
               type="button"
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleNo}
             >
-              Next
+              No
             </Button>
           </Grid>
         </form>

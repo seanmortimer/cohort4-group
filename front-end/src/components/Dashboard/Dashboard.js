@@ -28,7 +28,11 @@ import LayersIcon from '@material-ui/icons/Layers';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Checklist from '../Checklist/Checklist';
+import ChecklistSuccess from '../ChecklistSuccess/ChecklistSuccess';
 import { secondaryListItems } from './listItems';
+import postData from '../../business/fetch';
+
+const api = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev';
 
 function Copyright() {
   return (
@@ -125,12 +129,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-  const handleLoginSuccess = () => {
-    setPage(<Checklist />)
-  }
-  const [page, setPage] = useState(<Login onLoginSuccess={handleLoginSuccess} />);
-  const classes = useStyles();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const handleLoginSuccess = (user) => {
+    console.log('logged in user :>> ', user);
+    setCurrentUser(user);
+    setPage(<Checklist onSuccess={handleChecklistSuccess} />);
+  };
+
+  const handleChecklistSuccess = () => {
+    setPage(<ChecklistSuccess onSuccess={handleSpaceSignIn} />);
+  };
+
+  const [page, setPage] = useState(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
   const [open, setOpen] = useState(true);
+  const classes = useStyles();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -138,6 +151,13 @@ export default function Dashboard() {
     setOpen(false);
   };
 
+  const handleSpaceSignIn = async () => {
+    const url = `${api}/sign-in`;
+    // console.log('lets sign in');
+    // const user = {user: "a user goes here"}
+    const response = await postData(url, currentUser);
+    console.log('response :>> ', response);
+  };
 
   return (
     <div className={classes.root}>
@@ -178,7 +198,12 @@ export default function Dashboard() {
         <Divider />
         <List>
           {/* <ListItem button> */}
-          <ListItem button onClick={() => setPage(<Register onLoginSuccess={handleLoginSuccess} />)}>
+          <ListItem
+            button
+            onClick={() => setPage(
+              <Register onLoginSuccess={handleLoginSuccess} />,
+            )}
+          >
             <ListItemIcon>
               <ShoppingCartIcon />
             </ListItemIcon>
@@ -186,14 +211,27 @@ export default function Dashboard() {
           </ListItem>
 
           {/* <ListItem button> */}
-          <ListItem button onClick={() => setPage(<Login onLoginSuccess={handleLoginSuccess} />)}>
+          <ListItem
+            button
+            onClick={() => setPage(
+              <Login
+                onLoginSuccess={handleLoginSuccess}
+                url={api}
+              />,
+            )}
+          >
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
             <ListItemText primary="Login" />
           </ListItem>
           {/* <ListItem button> */}
-          <ListItem button onClick={() => setPage(<Checklist />)}>
+          <ListItem
+            button
+            onClick={() => setPage(
+              <Checklist onSuccess={handleChecklistSuccess} />,
+            )}
+          >
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
