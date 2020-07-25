@@ -125,7 +125,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-  const [page, setPage] = useState(<Login />);
+  const handleLoginSuccess = () => {
+    setPage(<Checklist />)
+  }
+  const [page, setPage] = useState(<Login onLoginSuccess={handleLoginSuccess} />);
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
@@ -135,10 +138,6 @@ export default function Dashboard() {
     setOpen(false);
   };
 
-  // const handleNav = (p) => {
-  //   setPage(p);
-  //   // console.log('p.target :>> ', p.target);
-  // };
 
   return (
     <div className={classes.root}>
@@ -179,7 +178,7 @@ export default function Dashboard() {
         <Divider />
         <List>
           {/* <ListItem button> */}
-          <ListItem button onClick={() => setPage(<Register />)}>
+          <ListItem button onClick={() => setPage(<Register onLoginSuccess={handleLoginSuccess} />)}>
             <ListItemIcon>
               <ShoppingCartIcon />
             </ListItemIcon>
@@ -187,7 +186,7 @@ export default function Dashboard() {
           </ListItem>
 
           {/* <ListItem button> */}
-          <ListItem button onClick={() => setPage(<Login />)}>
+          <ListItem button onClick={() => setPage(<Login onLoginSuccess={handleLoginSuccess} />)}>
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>

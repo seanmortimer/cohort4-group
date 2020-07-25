@@ -36,13 +36,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register() {
+export default function Register(props) {
   const classes = useStyles();
   const [userForm, setUserForm] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    phone: ''});
+    phone: ''
+  });
+  const [errorMsg, setErrorMsg] = useState({
+    message: '', 
+    firstName: '', 
+    lastName: '', 
+    email: '', 
+    phone: '', 
+    password: ''
+  })
 
   const handleForm = (e) => {
     const form = { ...userForm };
@@ -50,9 +59,6 @@ export default function Register() {
     setUserForm(form);
   };
 
-  const [errorMsg, setErrorMsg] = useState({
-    message: '', firstName: '', lastName: '', email: '', phone: '', password: ''
-  })
 
   const handleSubmit = () => {
     const { firstName, lastName, ...form } = userForm;
@@ -82,17 +88,11 @@ export default function Register() {
       test.password = 'Password must be at least 8 characters'
       isValid = false
     }
-
-    console.log(userForm)
-    console.log(form)
     setErrorMsg(test)
     if (isValid) {
       postData(postUrl, form);
-      // Move to success page
-      
+      props.onLoginSuccess();
     }
-
-
   };
 
   return (
@@ -121,7 +121,7 @@ export default function Register() {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                error={errorMsg.firstName ? true:false}
+                error={errorMsg.firstName ? true : false}
                 helperText={errorMsg.firstName}
               />
             </Grid>
@@ -134,7 +134,7 @@ export default function Register() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
-                error={errorMsg.lastName ? true:false}
+                error={errorMsg.lastName ? true : false}
                 helperText={errorMsg.lastName}
               />
             </Grid>
@@ -147,7 +147,7 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                error={errorMsg.email ? true:false}
+                error={errorMsg.email ? true : false}
                 helperText={errorMsg.email}
               />
             </Grid>
@@ -160,7 +160,7 @@ export default function Register() {
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
-                error={errorMsg.phone ? true:false}
+                error={errorMsg.phone ? true : false}
                 helperText={errorMsg.phone}
               />
             </Grid>
@@ -174,7 +174,7 @@ export default function Register() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                error={errorMsg.password ? true:false}
+                error={errorMsg.password ? true : false}
                 helperText={errorMsg.password}
               />
             </Grid>
