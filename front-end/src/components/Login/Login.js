@@ -125,7 +125,7 @@ export default function Login(props) {
                                 fullWidth
                                 name="password"
                                 label="Password"
-                                type="password"
+                                type="text"
                                 id="password"
                                 autoComplete="current-password"
                                 error={errorMsg.password ? true : false}

@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders the page', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const copyright = getByText(/copyright/i);
+  expect(copyright).toBeInTheDocument();
 });
