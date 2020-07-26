@@ -143,11 +143,12 @@ export default function Dashboard() {
   };
 
   const handleSpaceSignIn = async (user) => {
-    console.log('User spacesignin :>> ', user[0]);
     const url = `${api}/sign-in`;
+    const data = { email: user[0].email };
+    console.log('spacesignin email :>> ', data);
     // console.log('lets sign in');
     // const user = {user: "a user goes here"}
-    const response = await postData(url, user[0]);
+    const response = await postData(url, data);
     console.log('response :>> ', response);
   };
 
