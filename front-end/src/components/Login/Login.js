@@ -11,7 +11,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-// import { getData } from '../../business/javascript/fetch';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,10 +50,6 @@ export default function Login(props) {
     const form = { ...userForm };
     form[e.target.name] = e.target.value;
     setUserForm(form);
-    // const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data';
-    // let data = await getData(url, userForm.email, userForm.password)
-    // console.log(userForm)
-    // console.log(form)
   };
 
   const handleSubmit = async (e) => {
