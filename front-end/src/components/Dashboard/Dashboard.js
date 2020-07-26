@@ -130,18 +130,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [page, setPage] = useState(null);
+  // const [page, setPage] = useState(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
 
-  const handleLoginSuccess = (user) => {
-    console.log('logged in user :>> ', user);
-    setCurrentUser(user);
-    setPage(<Checklist onSuccess={handleChecklistSuccess} />);
-  };
-
-  const handleChecklistSuccess = () => {
-    setPage(<ChecklistSuccess onSuccess={handleSpaceSignIn} />);
-  };
-
-  const [page, setPage] = useState(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
   const [open, setOpen] = useState(true);
   const classes = useStyles();
   const handleDrawerOpen = () => {
@@ -151,14 +142,29 @@ export default function Dashboard() {
     setOpen(false);
   };
 
-  const handleSpaceSignIn = async () => {
+  const handleSpaceSignIn = async (user) => {
+    console.log('User spacesignin :>> ', user[0]);
     const url = `${api}/sign-in`;
     // console.log('lets sign in');
     // const user = {user: "a user goes here"}
-    const response = await postData(url, currentUser);
+    const response = await postData(url, user[0]);
     console.log('response :>> ', response);
   };
 
+  const handleChecklistSuccess = (user) => {
+    console.log('currentUser line 154 :>> ', currentUser);
+    console.log('user line 155 :>> ', user);
+    setPage(<ChecklistSuccess user={user} onSuccess={() => handleSpaceSignIn(user)} />);
+  };
+
+  const handleLoginSuccess = (user) => {
+    console.log('logged in user :>> ', user);
+    setCurrentUser(user);
+    setPage(<Checklist onSuccess={() => handleChecklistSuccess(user)} />);
+  };
+
+  console.log('currentUser from dash :>> ', currentUser);
+  if (!page) setPage(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -174,7 +180,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Teamwork Makes the Dream Work
+            Teamwork Makes the Dream Work || {currentUser ? currentUser[0].fullName : 'No user logged in'}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

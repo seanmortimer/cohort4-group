@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChecklistSucces(props) {
   // const [index, setIndex] = useState(0);
+  const name = props.user[0].fullName
   const classes = useStyles();
 
   const handleCancel = () => {
@@ -51,7 +52,7 @@ export default function ChecklistSucces(props) {
         <Typography component="h1" variant="h5">
           Covid-19 Screening Checklist
         </Typography>
-        <h1>Congratulations! You may sign in to the space.</h1>
+        <h1>Congratulations {name}! You may sign in to the space.</h1>
         <Grid container justify="space-between">
           <Button
             type="button"
