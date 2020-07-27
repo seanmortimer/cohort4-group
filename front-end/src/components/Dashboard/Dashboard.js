@@ -31,7 +31,7 @@ import Checklist from '../Checklist/Checklist';
 import ChecklistSuccess from '../ChecklistSuccess/ChecklistSuccess';
 import { secondaryListItems } from './listItems';
 import postData from '../../business/fetch';
-import UserPage from '../UserPage/UserPage'
+import UserPage from '../UserPage/UserPage';
 
 const api = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev';
 

@@ -74,10 +74,15 @@ export default function Login(props) {
       if (data[1] === 400) {
         return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
       }
+      if (data['email']){
+        
+      }
       console.log('data :>> ', data);
       props.onLoginSuccess(data);
       // console.log(props.onLoginSuccess)
     }
+
+
   };
 
   return (
