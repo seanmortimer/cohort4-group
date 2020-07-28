@@ -90,8 +90,10 @@ export default function Register(props) {
     }
     setErrorMsg(test)
     if (isValid) {
-      await postData(postUrl, form);
-      props.onLoginSuccess(userForm.email);
+      let data;
+      data = await postData(postUrl, form);
+      console.log(data['email']);
+      props.onLoginSuccess(data);
     }
   };
 

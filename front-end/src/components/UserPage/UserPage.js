@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {putData} from '../../business/fetch'
+import { putData } from '../../business/fetch'
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserPage(props) {
     const classes = useStyles();
-    const userData = props.userData[0]
-    
+    const userData = props.userData['body'].fullName
+
     const [updateData, setUpdateData] = useState(false)
 
     const [userForm, setUserForm] = useState({
@@ -55,19 +55,16 @@ export default function UserPage(props) {
     const onClickUpdateProfile = (e) => {
         setUpdateData(true)
     }
-    const handleSignOut = async(e)=>{
-        // {
-        //     "email": "test@test.com",
-        //     "date": "2020-7-27",
-        //   }
-        // let date = new Date();
+    const handleSignOut = async (e) => {
+        let data = {
+            email: props.userData['body']['body'].email,
+            date: props.userData['body']['body'].date
+        }
+        const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/sign-out';
+        await putData(url, data);
 
-        const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev';
-        let data = {"email": "222@gmail.com", "date": "2020-7-28"}
-        const response = await putData(url, data);
-        
     }
-    const onSave=(e)=>{
+    const onSave = (e) => {
 
     }
 
@@ -124,8 +121,8 @@ export default function UserPage(props) {
                         className={classes.updateBtn}
                         onClick={onSave}
                     >
-                    Save Profile
-                    </Button>       
+                        Save Profile
+                    </Button>
                 </Grid>
             )
         }
@@ -135,10 +132,6 @@ export default function UserPage(props) {
         // console.log(form)
     };
 
-
-
-
-
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -147,32 +140,32 @@ export default function UserPage(props) {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Welcome, {userData.fullName}
-        </Typography>
+                    Welcome, {props.userName['body'].fullName}
+                </Typography>
                 <p>{errorMsg.message}</p>
                 <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={handleSignOut}
-                    >
-                        Sign Out
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={handleSignOut}
+                >
+                    Sign Out
                     </Button>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.updateBtn}
-                        onClick={onClickUpdateProfile}
-                    >
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.updateBtn}
+                    onClick={onClickUpdateProfile}
+                >
                     Update Profile
-                    </Button>               
+                    </Button>
                 {handleUpdateProfile()}
-                    <Grid container justify="flex-end">
-                    </Grid>
+                <Grid container justify="flex-end">
+                </Grid>
             </div>
             <Box mt={5} />
         </Container>
