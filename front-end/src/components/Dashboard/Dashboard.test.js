@@ -4,17 +4,22 @@ import Dashboard from './Dashboard';
 
 const { getByText, getAllByText, getByRole, getAllByRole } = screen;
 
-test('the register page renders', () => {
+test('the dashboard renders', () => {
   render(<Dashboard />);
 
   expect(getAllByText(/Teamwork makes/i)[0]).toBeInTheDocument();
-//   expect(getAllByRole('textbox')).toHaveLength(2);
-  // expect(getByText(/password/i)).toBeInTheDocument();
+  expect(getAllByRole('textbox')).toHaveLength(2);
 });
 
-// test('submit blank form', () => {
-//   render(<Login />);
-//   fireEvent.click(getByRole('button'));
-// });
+// Need to set up test to await stuff
+test.skip('sign in > click through checklist > sign in', () => {
+  render(<Dashboard />);
 
+  const [email, pass] = getAllByRole('textbox');
+  const login = getAllByRole('button', { name: /login/i })[1];
+  fireEvent.change(email, 'sean@sean.ca');
+  fireEvent.change(pass, 'ssssaaaa');
+  fireEvent.click(login);
 
+  expect(getByText(/symptom/i)).toBeInTheDocument();
+});
