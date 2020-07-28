@@ -30,7 +30,7 @@ import Login from '../Login/Login';
 import Checklist from '../Checklist/Checklist';
 import ChecklistSuccess from '../ChecklistSuccess/ChecklistSuccess';
 import { secondaryListItems } from './listItems';
-import postData from '../../business/fetch';
+import {postData} from '../../business/fetch';
 import UserPage from '../UserPage/UserPage'
 
 const api = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev';
@@ -131,6 +131,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const [currentUser, setCurrentUser] = useState(null);
+
     const [page, setPage] = useState(null);
     // const [page, setPage] = useState(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
 

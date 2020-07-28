@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import postData from '../../business/fetch';
+import {postData} from '../../business/fetch';
 import { validateEmail, validatePass } from '../../business/helpers'
 
 const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
@@ -60,7 +60,7 @@ export default function Register(props) {
   };
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     const { firstName, lastName, ...form } = userForm;
     form.fullName = `${firstName} ${lastName}`;
     let test = { message: '', firstName: '', lastName: '', email: '', phone: '', password: '' }
@@ -90,8 +90,8 @@ export default function Register(props) {
     }
     setErrorMsg(test)
     if (isValid) {
-      postData(postUrl, form);
-      props.onLoginSuccess();
+      await postData(postUrl, form);
+      props.onLoginSuccess(userForm.email);
     }
   };
 
