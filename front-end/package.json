@@ -5,31 +5,30 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
+    "@testing-library/jest-dom": "^5.11.2",
+    "@testing-library/react": "^10.4.7",
     "clsx": "^1.1.1",
     "colorette": "^1.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "uuid": "^8.2.0"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@testing-library/user-event": "^12.0.11",
+    "@testing-library/user-event": "^12.0.17",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.18.0",
+    "eslint-plugin-jest": "^23.19.0",
     "eslint-plugin-jest-dom": "^3.1.4",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
     "node-fetch": "^2.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test  --runInBand",
+    "test": "react-scripts test  --runInBand --env=jsdom-fourteen",
     "testnorib": "react-scripts test",
     "cov": "react-scripts test --coverage --watchAll --runInBand",
     "covnorib": "react-scripts test --coverage --watchAll",

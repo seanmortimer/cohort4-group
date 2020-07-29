@@ -53,6 +53,7 @@ export default function Login(props) {
   };
 
   const handleSubmit = async (e) => {
+    // console.log('clicked submit :>> ');
     const url = `${props.url}/fetch-data`;
     const { email, password } = userForm;
     const test = { message: '', email: '', password: '' };
@@ -68,13 +69,15 @@ export default function Login(props) {
     }
     setErrorMsg(test);
     if (isValid) {
+    // console.log('email :>> ', email);
+    // console.log('pass :>> ', password);
       let data = await fetch(`${url}?email=${email}&password=${password}`);
       data = await data.json();
-    //   console.log('data', data[1]);
+      // console.log('data', data);
       if (data[1] === 400) {
         return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
       }
-      console.log('data :>> ', data);
+      // console.log('data :>> ', data);
       props.onLoginSuccess(data);
       // console.log(props.onLoginSuccess)
     }
