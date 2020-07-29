@@ -30,13 +30,8 @@ import Login from '../Login/Login';
 import Checklist from '../Checklist/Checklist';
 import ChecklistSuccess from '../ChecklistSuccess/ChecklistSuccess';
 import { secondaryListItems } from './listItems';
-<<<<<<< HEAD
-import postData from '../../business/fetch';
-import UserPage from '../UserPage/UserPage';
-=======
 import {postData} from '../../business/fetch';
 import UserPage from '../UserPage/UserPage'
->>>>>>> origin/master
 
 const api = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev';
 
