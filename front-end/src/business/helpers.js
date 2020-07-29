@@ -3,6 +3,6 @@ export const validateEmail = (email) => {
     return re.test(email)
 }
 
-export const validatePass = (pass='', length) => {
+export const validatePass = (pass = '', length) => {
     return pass.length >= length
 }

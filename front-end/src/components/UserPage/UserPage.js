@@ -45,6 +45,7 @@ export default function UserPage(props) {
     const [userForm, setUserForm] = useState({
         email: '',
         password: '',
+        phone: '',
     });
     const [errorMsg, setErrorMsg] = useState({
         message: '',
@@ -64,13 +65,55 @@ export default function UserPage(props) {
         await putData(url, data);
 
     }
-    const onSave = (e) => {
-
+    const handleForm = (e) => {
+        e.preventDefault();
+        const form = { ...userForm };
+        form[e.target.name] = e.target.value;
+        setUserForm(form);
+        //onClickUpdateProfile
     }
+
+    const handleSubmit = async (e) => {
+        const url = `${props.url}/fetch-data`;
+        const { email, password } = userForm;
+        const test = { message: '', email: '', password: '', phone: '' };
+        let isValid = true;
+        e.preventDefault();
+        if (!userForm.email) {
+            test.email = 'Please enter a valid Email';
+            isValid = false;
+        }
+        if (!userForm.password) {
+            test.password = 'Please enter a valid Password';
+            isValid = false;
+        }
+        if (!userForm.phone) {
+            test.phone = 'Please enter a valid Phone';
+            isValid = false;
+        }
+
+
+        setErrorMsg(test);
+        if (isValid) {
+            let data = await fetch(`${url}?email=${email}&password=${password}`);
+            data = await data.json();
+            //   console.log('data', data[1]);
+            if (data[1] === 400) {
+                return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
+            }
+            if (data['email']) {
+
+            }
+            console.log('data :>> ', data);
+            props.onLoginSuccess(data);
+            // console.log(props.onLoginSuccess)
+        }
+    
 
     const handleUpdateProfile = (e) => {
         if (updateData == true) {
             return (
+                <form className={classes.form} noValidate onChange={handleForm}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextField
@@ -113,17 +156,19 @@ export default function UserPage(props) {
                             helperText={errorMsg.phone}
                         />
                     </Grid>
+                    
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.updateBtn}
-                        onClick={onSave}
+                        onClick={handleSubmit}
                     >
                         Save Profile
                     </Button>
                 </Grid>
+                </form>
             )
         }
         // const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data';
@@ -161,6 +206,7 @@ export default function UserPage(props) {
                     className={classes.updateBtn}
                     onClick={onClickUpdateProfile}
                 >
+
                     Update Profile
                     </Button>
                 {handleUpdateProfile()}
