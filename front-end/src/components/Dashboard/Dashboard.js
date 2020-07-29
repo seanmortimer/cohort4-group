@@ -30,8 +30,13 @@ import Login from '../Login/Login';
 import Checklist from '../Checklist/Checklist';
 import ChecklistSuccess from '../ChecklistSuccess/ChecklistSuccess';
 import { secondaryListItems } from './listItems';
+<<<<<<< HEAD
 import postData from '../../business/fetch';
 import UserPage from '../UserPage/UserPage';
+=======
+import {postData} from '../../business/fetch';
+import UserPage from '../UserPage/UserPage'
+>>>>>>> origin/master
 
 const api = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev';
 
@@ -131,6 +136,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const [currentUser, setCurrentUser] = useState(null);
+
     const [page, setPage] = useState(null);
     // const [page, setPage] = useState(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
 
@@ -145,33 +151,34 @@ export default function Dashboard() {
 
     const handleSpaceSignIn = async (user) => {
         const url = `${api}/sign-in`;
-        const data = { email: user[0].email };
-        console.log('spacesignin email :>> ', data);
+        const data = { email: user['body'].email };
+        // console.log('spacesignin email :>> ', data);
         // console.log('lets sign in');
         // const user = {user: "a user goes here"}
         const response = await postData(url, data);
         
         //Local Storage
-        localStorage.setItem('email', user[0].email)
-        localStorage.setItem('password', user[0].password)
-
-        setPage(<UserPage userData={user} />)
+        localStorage.setItem('email', user['body'].email)
+        localStorage.setItem('password', user['body'].password)
+        console.log()
+        setPage(<UserPage userData={response} userName={user} />)
         console.log('response :>> ', response);
+        console.log('response :>> ', user);
     };
 
     const handleChecklistSuccess = (user) => {
-        console.log('currentUser line 154 :>> ', currentUser);
-        console.log('user line 155 :>> ', user);
+        // console.log('currentUser line 154 :>> ', currentUser);
+        // console.log('user line 155 :>> ', user);
         setPage(<ChecklistSuccess user={user} onSuccess={() => handleSpaceSignIn(user)} />);
     };
 
     const handleLoginSuccess = (user) => {
-        console.log('logged in user :>> ', user);
+        // console.log('logged in user :>> ', user);
         setCurrentUser(user);
         setPage(<Checklist onSuccess={() => handleChecklistSuccess(user)} />);
     };
 
-    console.log('currentUser from dash :>> ', currentUser);
+    // console.log('currentUser from dash :>> ', currentUser);
     if (!page) setPage(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
     return (
         <div className={classes.root}>
@@ -188,7 +195,7 @@ export default function Dashboard() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Teamwork Makes the Dream Work || {currentUser ? currentUser[0].fullName : 'No user logged in'}
+                        Teamwork Makes the Dream Work || {currentUser ? currentUser['body'].fullName : 'No user logged in'}
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
