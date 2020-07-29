@@ -11,7 +11,6 @@ test('the dashboard renders', () => {
   expect(getAllByRole('textbox')).toHaveLength(2);
 });
 
-// Need to set up test to await stuff
 test('sign in > click through checklist > sign in', async () => {
   render(<Dashboard />);
 
@@ -24,5 +23,4 @@ test('sign in > click through checklist > sign in', async () => {
   await waitFor(() => getByText(/symptom/i));
   expect(getByText(/symptom/i)).toBeInTheDocument();
   expect(getByText(/chills/i)).toBeInTheDocument();
-
 });
