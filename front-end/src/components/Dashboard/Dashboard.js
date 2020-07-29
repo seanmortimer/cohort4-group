@@ -191,7 +191,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Teamwork Makes the Dream Work || {currentUser ? currentUser[0].fullName : 'No user logged in'}
+          Teamwork Makes the Dream Work || {currentUser ? currentUser['body'].fullName : 'No user logged in'}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
