@@ -144,90 +144,38 @@ export default function Dashboard() {
     setOpen(false);
   };
 
-    const handleSpaceSignIn = async (user) => {
-        const url = `${api}/sign-in`;
-        const data = { email: user['body'].email };
-        // console.log('spacesignin email :>> ', data);
-        // console.log('lets sign in');
-        // const user = {user: "a user goes here"}
-        const response = await postData(url, data);
-        
-        //Local Storage
-        localStorage.setItem('email', user['body'].email)
-        localStorage.setItem('password', user['body'].password)
-        console.log()
-        setPage(<UserPage userData={response} userName={user} />)
-        console.log('response :>> ', response);
-        console.log('response :>> ', user);
-    };
+  const handleSpaceSignIn = async (user) => {
+    const url = `${api}/sign-in`;
+    const data = { email: user.body.email };
+    // console.log('spacesignin email :>> ', data);
+    // console.log('lets sign in');
+    // const user = {user: "a user goes here"}
+    const response = await postData(url, data);
 
-    const handleChecklistSuccess = (user) => {
-        // console.log('currentUser line 154 :>> ', currentUser);
-        // console.log('user line 155 :>> ', user);
-        setPage(<ChecklistSuccess user={user} onSuccess={() => handleSpaceSignIn(user)} />);
-    };
+    // Local Storage
+    localStorage.setItem('email', user.body.email);
+    localStorage.setItem('password', user.body.password);
+    // console.log();
+    setPage(<UserPage userData={response} userName={user} />);
+    // console.log('response :>> ', response);
+    // console.log('response :>> ', user);
+  };
 
-    const handleLoginSuccess = (user) => {
-        // console.log('logged in user :>> ', user);
-        setCurrentUser(user);
-        setPage(<Checklist onSuccess={() => handleChecklistSuccess(user)} />);
-    };
+  const handleChecklistSuccess = (user) => {
+    // console.log('currentUser line 154 :>> ', currentUser);
+    // console.log('user line 155 :>> ', user);
+    setPage(<ChecklistSuccess user={user} onSuccess={() => handleSpaceSignIn(user)} />);
+  };
 
-    // console.log('currentUser from dash :>> ', currentUser);
-    if (!page) setPage(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Teamwork Makes the Dream Work || {currentUser ? currentUser['body'].fullName : 'No user logged in'}
-                    </Typography>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    {/* <ListItem button> */}
-                    <ListItem
-                        button
-                        onClick={() => setPage(
-                            <Register onLoginSuccess={handleLoginSuccess} />,
-                        )}
-                    >
-                        <ListItemIcon>
-                            <ShoppingCartIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Register" />
-                    </ListItem>
+  const handleLoginSuccess = (user) => {
+    // console.log('logged in user :>> ', user);
+    setCurrentUser(user);
+    setPage(<Checklist onSuccess={() => handleChecklistSuccess(user)} />);
+  };
 
-  console.log('currentUser from dash :>> ', currentUser);
+  // console.log('currentUser from dash :>> ', currentUser);
   if (!page) setPage(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
