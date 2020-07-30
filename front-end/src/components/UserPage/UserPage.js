@@ -91,7 +91,7 @@ export default function UserPage(props) {
             test.phone = 'Please enter a valid Phone';
             isValid = false;
         }
-
+    
 
         setErrorMsg(test);
         if (isValid) {
@@ -108,7 +108,7 @@ export default function UserPage(props) {
             props.onLoginSuccess(data);
             // console.log(props.onLoginSuccess)
         }
-    
+    }
 
     const handleUpdateProfile = (e) => {
         if (updateData == true) {
