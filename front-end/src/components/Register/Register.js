@@ -12,8 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {postData} from '../../business/fetch';
+import { postData } from '../../business/fetch';
 import { validateEmail, validatePass } from '../../business/helpers'
+import { Auth } from 'aws-amplify'
 
 const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
 const useStyles = makeStyles((theme) => ({
@@ -45,13 +46,14 @@ export default function Register(props) {
     phone: ''
   });
   const [errorMsg, setErrorMsg] = useState({
-    message: '', 
-    firstName: '', 
-    lastName: '', 
-    email: '', 
-    phone: '', 
+    message: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
     password: ''
   })
+  const [cogMsg, setCogMsg] = useState('')
 
   const handleForm = (e) => {
     const form = { ...userForm };
@@ -59,43 +61,80 @@ export default function Register(props) {
     setUserForm(form);
   };
 
+  const clearErrorState = () => {
+    setCogMsg('')
+  }
 
-  const handleSubmit = async() => {
-    const { firstName, lastName, ...form } = userForm;
-    form.fullName = `${firstName} ${lastName}`;
-    let test = { message: '', firstName: '', lastName: '', email: '', phone: '', password: '' }
-    let isValid = true
+  const handleSubmit = async (e) => {
+    clearErrorState()
+    const { firstName, lastName, phone, email, password } = userForm;
+    let username = email
+    try {
+      const signUpResponse = await Auth.signUp({
+        username,
+        password,
+        // attributes: {
+        //   firstName: firstName,
+        //   lastName: lastName,
+        //   phone: phone,
+        // }
+      });
+      // data = await postData(postUrl, form);
+      // props.onLoginSuccess(data);
+      // this.props.history.push("/welcome");
+      console.log(signUpResponse);
+    } catch (error) {
+      // let err = null
+      // !error.message ? err = {"message": error}
+      setCogMsg(error)
+    }
+  }
 
-    if (!userForm.firstName) {
-      test.firstName = 'Please enter your first name'
-      isValid = false
-    }
-    if (!userForm.lastName) {
-      test.lastName = 'Please enter your last name'
-      isValid = false
-    }
-    if (!validateEmail(userForm.email)) {
-      console.log('validating email')
-      console.log(validateEmail(userForm.email))
-      test.email = 'Please enter an e-mail'
-      isValid = false
-    }
-    if (!userForm.phone) {
-      test.phone = 'Please enter your phone number'
-      isValid = false
-    }
-    if (!validatePass(userForm.password, 8)) {
-      test.password = 'Password must be at least 8 characters'
-      isValid = false
-    }
-    setErrorMsg(test)
-    if (isValid) {
-      let data;
-      data = await postData(postUrl, form);
-      console.log(data['email']);
-      props.onLoginSuccess(data);
-    }
-  };
+  console.log(cogMsg)
+
+  // const showStuff = () => {
+  //   return (
+  //     <p value={cogMsg}></p>
+  //   )
+  // }
+
+  // const handleSubmit = async() => {
+  //   const { firstName, lastName, ...form } = userForm;
+  //   form.fullName = `${firstName} ${lastName}`;
+  //   let test = { message: '', firstName: '', lastName: '', email: '', phone: '', password: '' }
+  //   let isValid = true
+
+  //   if (!userForm.firstName) {
+  //     test.firstName = 'Please enter your first name'
+  //     isValid = false
+  //   }
+  //   if (!userForm.lastName) {
+  //     test.lastName = 'Please enter your last name'
+  //     isValid = false
+  //   }
+  //   if (!validateEmail(userForm.email)) {
+  //     console.log('validating email')
+  //     console.log(validateEmail(userForm.email))
+  //     test.email = 'Please enter an e-mail'
+  //     isValid = false
+  //   }
+  //   if (!userForm.phone) {
+  //     test.phone = 'Please enter your phone number'
+  //     isValid = false
+  //   }
+  //   if (!validatePass(userForm.password, 8)) {
+  //     test.password = 'Password must be at least 8 characters'
+  //     isValid = false
+  //   }
+  //   setErrorMsg(test)
+  //   if (isValid) {
+  //     let data;
+  //     data = await postData(postUrl, form);
+  //     console.log(data['email']);
+  //     props.onLoginSuccess(data);
+  //   }
+  // };
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -107,6 +146,7 @@ export default function Register(props) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <p>{cogMsg.message}</p>
         <form
           className={classes.form}
           noValidate

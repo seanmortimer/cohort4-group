@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Auth } from 'aws-amplify'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -75,14 +77,12 @@ export default function Login(props) {
         return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
       }
       if (data['email']){
-        
+
       }
       console.log('data :>> ', data);
       props.onLoginSuccess(data);
       // console.log(props.onLoginSuccess)
     }
-
-
   };
 
   return (
