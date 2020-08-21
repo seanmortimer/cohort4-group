@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Auth } from 'aws-amplify'
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login(props) {
   const classes = useStyles();
+  const [cogMsg, setCogMsg] = useState('')
 
   const [userForm, setUserForm] = useState({
     email: '',
@@ -54,36 +53,57 @@ export default function Login(props) {
     setUserForm(form);
   };
 
-  const handleSubmit = async (e) => {
-    const url = `${props.url}/fetch-data`;
-    const { email, password } = userForm;
-    const test = { message: '', email: '', password: '' };
-    let isValid = true;
-    e.preventDefault();
-    if (!userForm.email) {
-      test.email = 'Please enter a valid Email';
-      isValid = false;
-    }
-    if (!userForm.password) {
-      test.password = 'Please enter a valid Password';
-      isValid = false;
-    }
-    setErrorMsg(test);
-    if (isValid) {
-      let data = await fetch(`${url}?email=${email}&password=${password}`);
-      data = await data.json();
-    //   console.log('data', data[1]);
-      if (data[1] === 400) {
-        return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
-      }
-      if (data['email']){
+  // COGNITO STUFF
 
-      }
-      console.log('data :>> ', data);
-      props.onLoginSuccess(data);
-      // console.log(props.onLoginSuccess)
+  const clearErrorState = () => {
+    setCogMsg('')
+  }
+
+  const handleSubmit = async (e) => {
+    clearErrorState()
+    e.preventDefault()
+    try {
+      const user = await Auth.signIn(userForm.email, userForm.password)
+      console.log(user)
+      props.onLoginSuccess(user);
     }
-  };
+    catch (error) {
+      setCogMsg(error)
+      console.log('Error signing in : ', error)
+    }
+  }
+
+  // OLD API STUFF
+  // const handleSubmit = async (e) => {
+  //   const url = `${props.url}/fetch-data`;
+  //   const { email, password } = userForm;
+  //   const test = { message: '', email: '', password: '' };
+  //   let isValid = true;
+  //   e.preventDefault();
+  //   if (!userForm.email) {
+  //     test.email = 'Please enter a valid Email';
+  //     isValid = false;
+  //   }
+  //   if (!userForm.password) {
+  //     test.password = 'Please enter a valid Password';
+  //     isValid = false;
+  //   }
+  //   setErrorMsg(test);
+  //   if (isValid) {
+  //     let data = await fetch(`${url}?email=${email}&password=${password}`);
+  //     data = await data.json();
+  //   //   console.log('data', data[1]);
+  //     if (data[1] === 400) {
+  //       return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
+  //     }
+  //     if (data['email']){
+
+  //     }
+  //     console.log('data :>> ', data);
+  //     props.onLoginSuccess(data);
+  //     // console.log(props.onLoginSuccess)
+  //   }
+  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -94,8 +114,8 @@ export default function Login(props) {
         </Avatar>
         <Typography component="h1" variant="h5">
           Login
-
         </Typography>
+        <p>{cogMsg.message}</p>
         <p>{errorMsg.message}</p>
         <form className={classes.form} noValidate onChange={handleForm}>
           <Grid container spacing={2}>
@@ -126,7 +146,6 @@ export default function Login(props) {
                 helperText={errorMsg.password}
               />
             </Grid>
-
           </Grid>
           <Button
             type="submit"

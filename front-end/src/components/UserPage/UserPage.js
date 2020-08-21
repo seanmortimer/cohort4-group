@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { putData } from '../../business/fetch'
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserPage(props) {
     const classes = useStyles();
-    const userData = props.userData['body'].fullName
+    // const userData = props.userData['body'].fullName
 
     const [updateData, setUpdateData] = useState(false)
 
@@ -56,6 +57,7 @@ export default function UserPage(props) {
     const onClickUpdateProfile = (e) => {
         setUpdateData(true)
     }
+
     const handleSignOut = async (e) => {
         let data = {
             email: props.userData['body']['body'].email,
@@ -63,14 +65,13 @@ export default function UserPage(props) {
         }
         const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/sign-out';
         await putData(url, data);
-
     }
+
     const handleForm = (e) => {
         e.preventDefault();
         const form = { ...userForm };
         form[e.target.name] = e.target.value;
         setUserForm(form);
-        //onClickUpdateProfile
     }
 
     const handleSubmit = async (e) => {
@@ -185,7 +186,7 @@ export default function UserPage(props) {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Welcome, {props.userName['body'].fullName}
+                    {/* Welcome, {props.userName['body'].fullName} */}
                 </Typography>
                 <p>{errorMsg.message}</p>
                 <Button
@@ -206,7 +207,6 @@ export default function UserPage(props) {
                     className={classes.updateBtn}
                     onClick={onClickUpdateProfile}
                 >
-
                     Update Profile
                     </Button>
                 {handleUpdateProfile()}

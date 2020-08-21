@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-// import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -11,9 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-// import Container from '@material-ui/core/Container';
-// import Grid from '@material-ui/core/Grid';
-// import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -131,7 +127,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const [currentUser, setCurrentUser] = useState(null);
-
   const [page, setPage] = useState(null);
   // const [page, setPage] = useState(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
 
@@ -146,17 +141,25 @@ export default function Dashboard() {
 
   const handleSpaceSignIn = async (user) => {
     const url = `${api}/sign-in`;
-    const data = { email: user.body.email };
+    const data = {
+      user_id: user.username,
+      first_name: user.attributes.name,
+      last_name: user.attributes.family_name,
+      phone_number: user.attributes.phone_number,
+      email: user.attributes.email
+    };
     // console.log('spacesignin email :>> ', data);
     // console.log('lets sign in');
     // const user = {user: "a user goes here"}
+    
     const response = await postData(url, data);
-
+    console.log(response)
+    
     // Local Storage
-    localStorage.setItem('email', user.body.email);
-    localStorage.setItem('password', user.body.password);
+    // localStorage.setItem('email', user.body.email);
+    // localStorage.setItem('password', user.body.password);
     // console.log();
-    setPage(<UserPage userData={response} userName={user} />);
+    setPage(<UserPage userData={response}/>);
     // console.log('response :>> ', response);
     // console.log('response :>> ', user);
   };
@@ -191,7 +194,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-          Teamwork Makes the Dream Work || {currentUser ? currentUser['body'].fullName : 'No user logged in'}
+          Teamwork Makes the Dream Work || {currentUser ? currentUser.attributes.name : 'No user logged in'}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -214,7 +217,6 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>
-          {/* <ListItem button> */}
           <ListItem
             button
             onClick={() => setPage(
@@ -226,8 +228,6 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="Register" />
           </ListItem>
-
-          {/* <ListItem button> */}
           <ListItem
             button
             onClick={() => setPage(
@@ -242,7 +242,6 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="Login" />
           </ListItem>
-          {/* <ListItem button> */}
           <ListItem
             button
             onClick={() => setPage(
