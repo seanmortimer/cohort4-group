@@ -83,7 +83,6 @@ export default function Checklist(props) {
   };
 
   const handleList = () => {
-    // console.log('handle it');
     let count = 0;
     if (!checklist[index].list) {
       return null;
@@ -92,7 +91,6 @@ export default function Checklist(props) {
       (item) =>
         <ListItem key={count++}>·{item}</ListItem>,
     );
-
     return <List>{listItems}</List>;
   };
 

@@ -28,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ChecklistSucces(props) {
+export default function ChecklistSuccess(props) {
   // const [index, setIndex] = useState(0);
-  const name = props.user['body'].fullName
+  const name = props.user.attributes.name
   const classes = useStyles();
 
   const handleCancel = () => {
