@@ -25,11 +25,11 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Checklist from '../Checklist/Checklist';
 import ChecklistSuccess from '../ChecklistSuccess/ChecklistSuccess';
+import ChecklistFail from '../ChecklistFail/ChecklistFail'
+import AdminDash from '../AdminDash/AdminDash'
 import { secondaryListItems } from './listItems';
 import { postData } from '../../business/fetch';
 import UserPage from '../UserPage/UserPage';
-
-const api = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev';
 
 function Copyright() {
   return (
@@ -123,23 +123,58 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
-}));
+}))
+
+const api = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev';
 
 export default function Dashboard() {
   const [currentUser, setCurrentUser] = useState(null);
   const [page, setPage] = useState(null);
-  // const [page, setPage] = useState(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
 
   const [open, setOpen] = useState(true);
   const classes = useStyles();
+
   const handleDrawerOpen = () => {
     setOpen(true);
-  };
+  }
+
   const handleDrawerClose = () => {
     setOpen(false);
-  };
+  }
 
-  const handleSpaceSignIn = async (user) => {
+  /* Handles successful login - sets the user hook with user object, and navigates to the Checklist. 
+  If the user answers successfully, -> navigates to success page and prompts if they want to sign in. */
+
+  const handleChecklist = (user) => {
+    setCurrentUser(user);
+    setPage(<Checklist
+      onSuccess={() => handleChecklistSuccess(user)}
+      onFail={() => handleChecklistFail(user)} />);
+  }
+
+
+  /* Handles Checklist success - Once a user successfully passes the checklist, the page navigates
+  to the success page and asks if they would like to login or cancel -> then transfers to user page. 
+  */
+
+  const handleChecklistSuccess = (user) => {
+    setPage(<ChecklistSuccess
+      user={user}
+      onSuccess={() => handleUserSignIn(user)} />);
+  }
+
+
+  /* Handles Checklist fail - Does not allow user to continue, links to resources. */
+
+  const handleChecklistFail = (user) => {
+    setPage(<ChecklistFail user={user} />);
+  }
+
+
+  /* Handles successful user login request after Checklist success - it uses Cognito to do auth, then sends the response
+  to the API -> DynamoDB to create a sign-in time and date. Navigates to the user page. */
+
+  const handleUserSignIn = async (user) => {
     const url = `${api}/sign-in`;
     const data = {
       user_id: user.username,
@@ -147,37 +182,16 @@ export default function Dashboard() {
       last_name: user.attributes.family_name,
       phone_number: user.attributes.phone_number,
       email: user.attributes.email
-    };
-    // console.log('spacesignin email :>> ', data);
-    // console.log('lets sign in');
-    // const user = {user: "a user goes here"}
-    
+    }
+
     const response = await postData(url, data);
-    console.log(response)
-    
-    // Local Storage
-    // localStorage.setItem('email', user.body.email);
-    // localStorage.setItem('password', user.body.password);
-    // console.log();
-    setPage(<UserPage userData={response}/>);
-    // console.log('response :>> ', response);
-    // console.log('response :>> ', user);
-  };
+    // console.log(response)
 
-  const handleChecklistSuccess = (user) => {
-    // console.log('currentUser line 154 :>> ', currentUser);
-    // console.log('user line 155 :>> ', user);
-    setPage(<ChecklistSuccess user={user} onSuccess={() => handleSpaceSignIn(user)} />);
-  };
+    // userData is the response back from lambda -> space-sign-in table data
+    setPage(<UserPage userData={response} />);
+  }
 
-  const handleLoginSuccess = (user) => {
-    // console.log('logged in user :>> ', user);
-    setCurrentUser(user);
-    setPage(<Checklist onSuccess={() => handleChecklistSuccess(user)} />);
-  };
-
-  // console.log('currentUser from dash :>> ', currentUser);
-  if (!page) setPage(<Login url={api} onLoginSuccess={handleLoginSuccess} />);
+  if (!page) setPage(<Login url={api} onChecklistSuccess={handleChecklist} />);
 
   return (
     <div className={classes.root}>
@@ -194,7 +208,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-          Teamwork Makes the Dream Work || {currentUser ? currentUser.attributes.name : 'No user logged in'}
+            Teamwork Makes the Dream Work || {currentUser ? currentUser.attributes.name : 'No user logged in'}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -220,7 +234,9 @@ export default function Dashboard() {
           <ListItem
             button
             onClick={() => setPage(
-              <Register onLoginSuccess={handleLoginSuccess} />,
+              <Register
+                onChecklistSuccess={handleChecklist}
+              />,
             )}
           >
             <ListItemIcon>
@@ -228,11 +244,12 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="Register" />
           </ListItem>
+
           <ListItem
             button
             onClick={() => setPage(
               <Login
-                onLoginSuccess={handleLoginSuccess}
+                onChecklistSuccess={handleChecklist}
                 url={api}
               />,
             )}
@@ -242,10 +259,13 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="Login" />
           </ListItem>
+
           <ListItem
             button
             onClick={() => setPage(
-              <Checklist onSuccess={handleChecklistSuccess} />,
+              <Checklist
+                onSuccess={handleChecklistSuccess}
+              />,
             )}
           >
             <ListItemIcon>
@@ -253,6 +273,7 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="Checklist" />
           </ListItem>
+
           <ListItem
             button
             onClick={() => setPage(
@@ -264,12 +285,19 @@ export default function Dashboard() {
             </ListItemIcon>
             <ListItemText primary="User Profile" />
           </ListItem>
-          <ListItem button>
+
+          <ListItem
+            button
+            onClick={() => setPage(
+              <AdminDash />,
+            )}
+          >
             <ListItemIcon>
               <LayersIcon />
             </ListItemIcon>
-            <ListItemText primary="Null also" />
+            <ListItemText primary="Reports" />
           </ListItem>
+
         </List>
         <Divider />
         <List>{secondaryListItems}</List>
@@ -277,9 +305,8 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {page}
-        {/* <Checklist /> */}
         <Copyright />
       </main>
     </div>
-  );
+  )
 }

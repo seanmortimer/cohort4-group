@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import { Container, Typography, Box, Grid, TextField, CssBaseline, Button, Avatar } from '@material-ui/core';
 import { putData } from '../../business/fetch'
+import Dashboard from '../Dashboard/Dashboard'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,20 +32,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserPage(props) {
     const classes = useStyles();
-    // const userData = props.userData['body'].fullName
 
-    const [updateData, setUpdateData] = useState(false)
+    const name = props.userData['body']['body'].first_name + ' '
+        + props.userData['body']['body'].last_name
 
     const [userForm, setUserForm] = useState({
         email: '',
         password: '',
         phone: '',
     });
+
     const [errorMsg, setErrorMsg] = useState({
         message: '',
         email: '',
         password: '',
     });
+
+    const [updateData, setUpdateData] = useState(false)
 
     const onClickUpdateProfile = (e) => {
         setUpdateData(true)
@@ -63,8 +59,12 @@ export default function UserPage(props) {
             email: props.userData['body']['body'].email,
             date: props.userData['body']['body'].date
         }
+        // Adds the sign out time stamp
         const url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/sign-out';
-        await putData(url, data);
+        const response = await putData(url, data);
+        console.log(response)
+        console.log('Pressed sign out')
+        //To do - Redirect to login page
     }
 
     const handleForm = (e) => {
@@ -75,44 +75,45 @@ export default function UserPage(props) {
     }
 
     const handleSubmit = async (e) => {
-        const url = `${props.url}/fetch-data`;
-        const { email, password } = userForm;
-        const test = { message: '', email: '', password: '', phone: '' };
-        let isValid = true;
         e.preventDefault();
+        // const url = `${props.url}/fetch-data`;
+        const { email, password, phone } = userForm;
+        const msg = { email: '', password: '', phone: '' };
+        let isValid = true;
+        
         if (!userForm.email) {
-            test.email = 'Please enter a valid Email';
+            msg.email = 'Please enter a valid Email';
             isValid = false;
         }
         if (!userForm.password) {
-            test.password = 'Please enter a valid Password';
+            msg.password = 'Please enter a valid Password';
             isValid = false;
         }
         if (!userForm.phone) {
-            test.phone = 'Please enter a valid Phone';
+            msg.phone = 'Please enter a valid Phone';
             isValid = false;
         }
     
+        setErrorMsg(msg);
 
-        setErrorMsg(test);
         if (isValid) {
-            let data = await fetch(`${url}?email=${email}&password=${password}`);
-            data = await data.json();
-            //   console.log('data', data[1]);
-            if (data[1] === 400) {
-                return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
-            }
-            if (data['email']) {
-
-            }
-            console.log('data :>> ', data);
-            props.onLoginSuccess(data);
-            // console.log(props.onLoginSuccess)
+            console.log('Pressed save profile')
         }
+
+        // if (isValid) {
+        //     let data = await fetch(`${url}?email=${email}&password=${password}`);
+        //     data = await data.json();
+        //     if (data[1] === 400) {
+        //         return setErrorMsg({ message: 'That Email/Password did not match anything in our system. Please enter a valid Email and Password.' });
+        //     }
+        //     console.log('data :>> ', data);
+        //     props.onLoginSuccess(data);
+        //     // console.log(props.onLoginSuccess)
+        // }
     }
 
     const handleUpdateProfile = (e) => {
-        if (updateData == true) {
+        if (updateData === true) {
             return (
                 <form className={classes.form} noValidate onChange={handleForm}>
                 <Grid container spacing={2}>
@@ -186,7 +187,7 @@ export default function UserPage(props) {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    {/* Welcome, {props.userName['body'].fullName} */}
+                    Welcome, {name}
                 </Typography>
                 <p>{errorMsg.message}</p>
                 <Button

@@ -38,7 +38,7 @@ export default function Confirmation(props) {
     }
 
     const handlePages = () => {
-        if (page == false) {
+        if (page === false) {
             return (
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -64,9 +64,9 @@ export default function Confirmation(props) {
                 </Container>
             )
         }
-        if (page == true) {
+        if (page === true) {
             return (
-                <Login onLoginSuccess={props.onLoginSuccesss} />
+                <Login onChecklistSuccess={props.onChecklistSuccess} />
             )
         }
     }
@@ -75,6 +75,11 @@ export default function Confirmation(props) {
         <div>
             {handlePages()}
         </div>
+    )
+}
+
+    // Old return stuff
+    // return (
         // <Container component="main" maxWidth="xs">
         //     <CssBaseline />
         //     <div className={classes.paper}>
@@ -97,5 +102,5 @@ export default function Confirmation(props) {
         //         </Button>
         //     </div>
         // </Container>
-    );
-}
+//     );
+// }

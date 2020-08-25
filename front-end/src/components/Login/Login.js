@@ -39,21 +39,23 @@ export default function Login(props) {
   const [userForm, setUserForm] = useState({
     email: '',
     password: '',
-  });
+  })
+
   const [errorMsg, setErrorMsg] = useState({
     message: '',
     email: '',
     password: '',
-  });
+  })
 
   const handleForm = (e) => {
     e.preventDefault();
     const form = { ...userForm };
     form[e.target.name] = e.target.value;
     setUserForm(form);
-  };
+  }
 
   // COGNITO STUFF
+  // to do: make sure if user has not confirmed their e-mail, they cannot log in yet. 
 
   const clearErrorState = () => {
     setCogMsg('')
@@ -65,11 +67,11 @@ export default function Login(props) {
     try {
       const user = await Auth.signIn(userForm.email, userForm.password)
       console.log(user)
-      props.onLoginSuccess(user);
+      props.onChecklistSuccess(user);
     }
     catch (error) {
       setCogMsg(error)
-      console.log('Error signing in : ', error)
+      console.log('Error signing in: ', error)
     }
   }
 
@@ -116,7 +118,7 @@ export default function Login(props) {
           Login
         </Typography>
         <p>{cogMsg.message}</p>
-        <p>{errorMsg.message}</p>
+        {/* <p>{errorMsg.message}</p> */}
         <form className={classes.form} noValidate onChange={handleForm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
