@@ -12,13 +12,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { postData } from '../../business/fetch';
+// import { postData } from '../../business/fetch';
 import { validateEmail, validatePass } from '../../business/helpers'
 import { Auth } from 'aws-amplify'
 import Confirmation from '../Confirmation/Confirmation'
-// import {CognitoUserPool} from 'amazon-cognito-identity-js'
 
-const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
+// const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -59,7 +58,7 @@ export default function Register(props) {
         password: ''
     })
 
-    const [cogMsg, setCogMsg] = useState('')
+    const [cogMsg, setCogMsg] = useState('') //Cognito validation messages
     const [page, setPage] = useState(false);
 
     const handleForm = (e) => {
@@ -132,16 +131,15 @@ export default function Register(props) {
             return
         }
 
-        // setErrorMsg(msg)
-
         if (isValid) {
             msg.isValid = true
             setErrorMsg(msg)
         }
-    };
+    }
 
     const handlePageChange = () => {
-        if (page == false) {
+        //If false, shows register fields, if true, moves to Checklist
+        if (page === false) {
             return (
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -262,12 +260,22 @@ export default function Register(props) {
                 </Container>
             )
         }
-        if (page == true) {
+        if (page === true) {
             return (
-                <Confirmation onLoginSuccess={props.onLoginSuccess} />
+                <Confirmation onChecklistSuccess={props.onChecklistSuccess} />
             )
         }
     }
+
+    return (
+        <div>
+            {handlePageChange()}
+        </div>
+    )
+}
+
+
+// Old return stuff
 
     // const handleSubmit = async() => {
     //   const { firstName, lastName, ...form } = userForm;
@@ -306,10 +314,7 @@ export default function Register(props) {
     //   }
     // };
 
-    return (
-        <div>
-            {handlePageChange()}
-        </div>
+    // return (
         // <Container component="main" maxWidth="xs">
         //   <CssBaseline />
         //   <div className={classes.paper}>
@@ -421,5 +426,5 @@ export default function Register(props) {
         //   </div>
         //   <Box mt={5} />
         // </Container>
-    );
-}
+    // );
+// }

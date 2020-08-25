@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { List, ListItem } from '@material-ui/core';
+import Login from '../Login/Login'
 
 // TODO: Add stepper component to show progress
 
@@ -82,6 +83,10 @@ export default function Checklist(props) {
     }
   };
 
+  const handleYes = () => {
+    props.onFail();
+  }
+
   const handleList = () => {
     let count = 0;
     if (!checklist[index].list) {
@@ -113,6 +118,7 @@ export default function Checklist(props) {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleYes}
             >
               Yes
             </Button>

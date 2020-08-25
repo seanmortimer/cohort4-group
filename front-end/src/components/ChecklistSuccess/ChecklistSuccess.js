@@ -1,12 +1,7 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import { Container, Avatar, Button, Grid, Typography, CssBaseline } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,16 +24,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ChecklistSuccess(props) {
-  // const [index, setIndex] = useState(0);
-  const name = props.user.attributes.name
   const classes = useStyles();
+  const name = props.user.attributes.name + ' ' + props.user.attributes.family_name
 
   const handleCancel = () => {
     console.log('Pressed cancel');
   };
 
   const handleSignIn = () => {
-    console.log('Pressed sign in');
+    console.log('Pressed entering now');
     props.onSuccess();
   };
 
@@ -52,7 +46,7 @@ export default function ChecklistSuccess(props) {
         <Typography component="h1" variant="h5">
           Covid-19 Screening Checklist
         </Typography>
-        <h1>Congratulations {name}! You may sign in to the space.</h1>
+        <h1>Congratulations {name}! You may enter into the to the space.</h1>
         <Grid container justify="space-between">
           <Button
             type="button"
@@ -70,7 +64,7 @@ export default function ChecklistSuccess(props) {
             className={classes.submit}
             onClick={handleSignIn}
           >
-            Submit
+            Entering Now
           </Button>
         </Grid>
       </div>
