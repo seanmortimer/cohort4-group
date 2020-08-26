@@ -75,6 +75,8 @@ export default function Register(props) {
         clearErrorState()
         const { firstName, lastName, phone, email, password } = userForm;
         let username = email
+        let phone_number = '+1' + phone
+
         try {
             const signUpResponse = await Auth.signUp({
                 username,
@@ -82,7 +84,7 @@ export default function Register(props) {
                 attributes: {
                     name: firstName,
                     family_name: lastName,
-                    phone_number: phone,
+                    phone_number: phone_number,
                 }
             });
             console.log(signUpResponse);
