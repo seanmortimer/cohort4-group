@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Auth } from 'aws-amplify'
+import { validateEmail, validatePass } from '../../business/helpers'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -64,14 +65,27 @@ export default function Login(props) {
   const handleSubmit = async (e) => {
     clearErrorState()
     e.preventDefault()
-    try {
-      const user = await Auth.signIn(userForm.email, userForm.password)
-      console.log(user)
-      props.onChecklistSuccess(user);
+    
+    if (!validateEmail(userForm.email)) {
+      setErrorMsg({ message: 'Please enter a valid email address' })
     }
-    catch (error) {
-      setCogMsg(error)
-      console.log('Error signing in: ', error)
+    else if (!validatePass(userForm.password, 8)) {
+      setErrorMsg({ message: 'Password must be at least 8 characters' })
+    }
+      
+    else {
+      try {
+        const user = await Auth.signIn(userForm.email, userForm.password)
+        console.log(user)
+        props.onChecklistSuccess(user);
+      }
+      catch (error) {
+        // setCogMsg(error)
+        console.log('Error signing in: ', error)
+        if (error.code === "NotAuthorizedException")
+          setErrorMsg({message: error.message})
+          // setErrorMsg({message: 'Please enter a valid e-mail and password'})
+      }
     }
   }
 
@@ -117,8 +131,8 @@ export default function Login(props) {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <p>{cogMsg.message}</p>
-        {/* <p>{errorMsg.message}</p> */}
+        {/* <p>{cogMsg.message}</p> */}
+        <p>{errorMsg.message}</p>
         <form className={classes.form} noValidate onChange={handleForm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>

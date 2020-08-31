@@ -3,7 +3,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Box, Grid, TextField, CssBaseline, Button, Avatar } from '@material-ui/core';
 import { putData } from '../../business/fetch'
-import Dashboard from '../Dashboard/Dashboard'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
