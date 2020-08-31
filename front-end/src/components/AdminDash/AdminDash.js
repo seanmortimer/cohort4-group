@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {TextField, Typography, Button, Avatar, Grid} from '@material-ui/core';
+import { TextField, Typography, Button, Avatar, Grid } from '@material-ui/core';
 import AdminDisplay from '../AdminDisplay/AdminDisplay';
 import PageviewIcon from '@material-ui/icons/Pageview';
 
@@ -74,38 +74,57 @@ export default function AdminDash() {
     setQueryData(data.body)
   }
 
+  const handleCurrentDaySubmit = async (e) => {
+    let url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data'
+    let data = await fetch(`${url}?Start_Date=${dateStamp}&End_Date=${dateStamp}`);
+    data = await data.json();
+    console.log(data)
+    setQueryData(data.body)
+  }
+
+  var d = new Date();
+  let year = d.getFullYear()
+  let month = d.getMonth() + 1
+  if (month<10){
+    month = `0${month}`
+  }
+
+  let day = d.getDate()
+  let dateStamp = `${year}-${month}-${day}`
+
+
   return (
     <div className={classes.container}>
       <Avatar className={classes.avatar}>
         <PageviewIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-          Hello, Admin
+        Hello, Admin
       </Typography>
       <form className={classes.form} noValidate onChange={handleForm}>
-      <Grid container spacing={2}>
-            <Grid item xs={12}>
-        <TextField
-          id="start_date"
-          label="Select start date"
-          type="date"
-          defaultValue=""
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              id="start_date"
+              label="Select start date"
+              type="date"
+              defaultValue=""
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
           <Grid item xs={12}>
-        <TextField
-          id="end_date"
-          label="Select end date"
-          type="date"
-          defaultValue=""
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
+            <TextField
+              id="end_date"
+              label="Select end date"
+              type="date"
+              defaultValue=""
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
         </Grid>
@@ -119,13 +138,23 @@ export default function AdminDash() {
         >
           Start Query
             </Button>
+        <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={handleCurrentDaySubmit}
+        // disabled={!errorMsg.isValid}
+        >
+          {dateStamp} Space Users
+            </Button>
       </form>
       <ol>
         {queryData.map((item) => {
           console.log(item)
           return <AdminDisplay item={item}
             key={item.key}
-            // key={Object.keys(queryData)}
+          // key={Object.keys(queryData)}
           />
         })}
       </ol>
