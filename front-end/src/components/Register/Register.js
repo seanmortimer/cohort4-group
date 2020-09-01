@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register(props) {
     const classes = useStyles();
+    
 
     const [userForm, setUserForm] = useState({
         firstName: '',
@@ -231,10 +232,7 @@ export default function Register(props) {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <FormControlLabel
-                                        control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                        label="I want to receive inspiration, marketing promotions and updates via email."
-                                    />
+                                    <p>DISCLAIMER: All information gathered will be kept confidential and deleted after a 6 week period.</p>
                                 </Grid>
                             </Grid>
                             <Button

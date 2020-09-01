@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Auth } from "aws-amplify";
+import { useHistory } from "react-router-dom";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Box, Grid, TextField, CssBaseline, Button, Avatar } from '@material-ui/core';
@@ -30,24 +32,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserPage(props) {
+    const history = useHistory();
     const classes = useStyles();
 
     const name = props.userData['body']['body'].first_name + ' '
         + props.userData['body']['body'].last_name
 
     const [userForm, setUserForm] = useState({
-        email: '',
         password: '',
-        phone: '',
+        oldPassword: '',
+        confirmPassword: '',
     });
 
     const [errorMsg, setErrorMsg] = useState({
-        message: '',
-        email: '',
         password: '',
+        oldPassword: '',
+        confirmPassword: '',
     });
 
-    const [updateData, setUpdateData] = useState(false)
+    const [isChanging, setIsChanging] = useState(false);
+
+    const [updateData, setUpdateData] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(false);
 
     const onClickUpdateProfile = (e) => {
         setUpdateData(true)
@@ -75,29 +81,45 @@ export default function UserPage(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // const url = `${props.url}/fetch-data`;
-        const { email, password, phone } = userForm;
-        const msg = { email: '', password: '', phone: '' };
-        let isValid = true;
-        
-        if (!userForm.email) {
-            msg.email = 'Please enter a valid Email';
-            isValid = false;
-        }
-        if (!userForm.password) {
-            msg.password = 'Please enter a valid Password';
-            isValid = false;
-        }
-        if (!userForm.phone) {
-            msg.phone = 'Please enter a valid Phone';
-            isValid = false;
-        }
-    
-        setErrorMsg(msg);
+        setIsChanging(true);
 
-        if (isValid) {
-            console.log('Pressed save profile')
+        try { 
+            const currentUser = await Auth.currentAuthenticatedUser();
+            await Auth.changePassword(
+                currentUser,
+                userForm.oldPassword,
+                userForm.password
+            );
+            setUpdateData(false)
+            setSuccessMessage(true)
+        } catch (error) {
+            // onError(error);
+            console.log(error)
+            setIsChanging(false);
         }
+        // const url = `${props.url}/fetch-data`;
+        // const { email, password, phone } = userForm;
+        // const msg = { email: '', password: '', phone: '' };
+        // let isValid = true;
+        
+        // if (!userForm.email) {
+        //     msg.email = 'Please enter a valid Email';
+        //     isValid = false;
+        // }
+        // if (!userForm.password) {
+        //     msg.password = 'Please enter a valid Password';
+        //     isValid = false;
+        // }
+        // if (!userForm.phone) {
+        //     msg.phone = 'Please enter a valid Phone';
+        //     isValid = false;
+        // }
+    
+        // setErrorMsg(msg);
+
+        // if (isValid) {
+        //     console.log('Pressed save profile')
+        // }
 
         // if (isValid) {
         //     let data = await fetch(`${url}?email=${email}&password=${password}`);
@@ -111,6 +133,14 @@ export default function UserPage(props) {
         // }
     }
 
+    const updatedMessageDisply = () => {
+        if (successMessage === true){
+            return ( 
+                <p>Your Password has been updated successfully</p>
+            )
+        }
+    }
+
     const handleUpdateProfile = (e) => {
         if (updateData === true) {
             return (
@@ -121,10 +151,11 @@ export default function UserPage(props) {
                             variant="outlined"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="oldPassword"
+                            label="Old Password"
+                            type="password"
+                            name="oldPassword"
+                            autoComplete="oldPassword"
                             error={!!errorMsg.email}
                             helperText={errorMsg.email}
                         />
@@ -135,8 +166,8 @@ export default function UserPage(props) {
                             required
                             fullWidth
                             name="password"
-                            label="Password"
-                            type="text"
+                            label="New Password"
+                            type="password"
                             id="password"
                             autoComplete="current-password"
                             error={!!errorMsg.password}
@@ -148,11 +179,11 @@ export default function UserPage(props) {
                             variant="outlined"
                             required
                             fullWidth
-                            name="phone"
-                            label="Phone"
-                            type="text"
-                            id="phone"
-                            autoComplete="current-phone"
+                            name="confirmPassword"
+                            label="Confirm Password"
+                            type="password"
+                            id="confirmPassword"
+                            autoComplete="confirm-Password"
                             error={!!errorMsg.phone}
                             helperText={errorMsg.phone}
                         />
@@ -166,7 +197,7 @@ export default function UserPage(props) {
                         className={classes.updateBtn}
                         onClick={handleSubmit}
                     >
-                        Save Profile
+                        Save Password
                     </Button>
                 </Grid>
                 </form>
@@ -207,9 +238,10 @@ export default function UserPage(props) {
                     className={classes.updateBtn}
                     onClick={onClickUpdateProfile}
                 >
-                    Update Profile
+                    Change Password
                     </Button>
                 {handleUpdateProfile()}
+                {updatedMessageDisply()}
                 <Grid container justify="flex-end">
                 </Grid>
             </div>

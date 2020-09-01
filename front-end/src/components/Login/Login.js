@@ -65,14 +65,14 @@ export default function Login(props) {
   const handleSubmit = async (e) => {
     clearErrorState()
     e.preventDefault()
-    
+
     if (!validateEmail(userForm.email)) {
       setErrorMsg({ message: 'Please enter a valid email address' })
     }
     else if (!validatePass(userForm.password, 8)) {
       setErrorMsg({ message: 'Password must be at least 8 characters' })
     }
-      
+
     else {
       try {
         const user = await Auth.signIn(userForm.email, userForm.password)
@@ -83,8 +83,8 @@ export default function Login(props) {
         // setCogMsg(error)
         console.log('Error signing in: ', error)
         if (error.code === "NotAuthorizedException")
-          setErrorMsg({message: error.message})
-          // setErrorMsg({message: 'Please enter a valid e-mail and password'})
+          setErrorMsg({ message: error.message })
+        // setErrorMsg({message: 'Please enter a valid e-mail and password'})
       }
     }
   }
@@ -161,6 +161,9 @@ export default function Login(props) {
                 error={!!errorMsg.password}
                 helperText={errorMsg.password}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <p>DISCLAIMER: All information gathered will be kept confidential and deleted after a 6 week period.</p>
             </Grid>
           </Grid>
           <Button
