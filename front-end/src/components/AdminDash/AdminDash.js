@@ -24,8 +24,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center'
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    marginTop: 25,
   },
+  textField: {
+    padding: 10
+  }
 }));
 
 export default function AdminDash() {
@@ -34,10 +37,27 @@ export default function AdminDash() {
   const [endDate, setEndDate] = useState('')
   const [queryData, setQueryData] = useState([])
 
+
   const handleForm = (e) => {
     setStartDate(document.getElementById('start_date').value)
     setEndDate(document.getElementById('end_date').value)
   }
+
+  
+  var d = new Date();
+  let year = d.getFullYear()
+  let month = d.getMonth() + 1
+  let day = d.getDate()
+
+  if (month<10){
+    month = `0${month}`
+  }
+
+  if (day < 10) {
+    day = `0${day}`
+  }
+
+  let dateStamp = `${year}-${month}-${day}`
 
   const handleSubmit = async (e) => {
     let url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data'
@@ -45,6 +65,7 @@ export default function AdminDash() {
     data = await data.json();
     setQueryData(data.body)
   }
+
 
   const handleCurrentDaySubmit = async (e) => {
     let url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data'
@@ -54,18 +75,24 @@ export default function AdminDash() {
     setQueryData(data.body)
   }
 
+
   const handleDelete = async (e) => {
     let url = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/fetch-data'
     let url2 = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/delete'
     
     var d = new Date();
+    let day = d.getDate()
     let year = d.getFullYear()
     let month = d.getMonth()
+
     if (month<10){
       month = `0${month}`
     }
   
-    let day = d.getDate()
+    if (day<10){
+      day = `0${day}`
+    }
+
     let deletionStamp = `${year}-${month}-${day}`
     let data = await fetch(`${url}?Start_Date='2020-03-05'&End_Date=${deletionStamp}`);
     data = await data.json();
@@ -77,15 +104,6 @@ export default function AdminDash() {
     })
   }
 
-  var d = new Date();
-  let year = d.getFullYear()
-  let month = d.getMonth() + 1
-  if (month<10){
-    month = `0${month}`
-  }
-
-  let day = d.getDate()
-  let dateStamp = `${year}-${month}-${day}`
 
 
   return (
@@ -98,7 +116,6 @@ export default function AdminDash() {
       </Typography>
       <form className={classes.form} noValidate onChange={handleForm}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
             <TextField
               id="start_date"
               label="Select start date"
@@ -109,8 +126,6 @@ export default function AdminDash() {
                 shrink: true,
               }}
             />
-          </Grid>
-          <Grid item xs={12}>
             <TextField
               id="end_date"
               label="Select end date"
@@ -121,7 +136,6 @@ export default function AdminDash() {
                 shrink: true,
               }}
             />
-          </Grid>
         </Grid>
         <Button
           type="button"
@@ -151,7 +165,7 @@ export default function AdminDash() {
           onClick={handleDelete}
         // disabled={!errorMsg.isValid}
         >
-          Delete
+          Delete Previous Month
             </Button>
       </form>
       <ol>
@@ -159,7 +173,6 @@ export default function AdminDash() {
           // console.log(item)
           return <AdminDisplay item={item}
             key={item.key}
-          // key={Object.keys(queryData)}
           />
         })}
       </ol>

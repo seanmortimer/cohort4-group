@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import {
+    Avatar, Button, CssBaseline, TextField, Grid, Box, Typography,
+    Container, Link
+} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 // import { postData } from '../../business/fetch';
 import { validateEmail, validatePass } from '../../business/helpers'
 import { Auth } from 'aws-amplify'
 import Confirmation from '../Confirmation/Confirmation'
+import Login from '../Login/Login'
 
 // const postUrl = 'https://9ynldka4jk.execute-api.ca-central-1.amazonaws.com/dev/store-data';
 
@@ -37,11 +31,14 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    disclaimer: {
+        textAlign: 'center'
+    }
 }));
 
 export default function Register(props) {
     const classes = useStyles();
-    
+
 
     const [userForm, setUserForm] = useState({
         firstName: '',
@@ -60,7 +57,9 @@ export default function Register(props) {
     })
 
     const [cogMsg, setCogMsg] = useState('') //Cognito validation messages
-    const [page, setPage] = useState(false);
+    // const [page, setPage] = useState(false);
+    const [page, setPage] = useState(null);
+
 
     const handleForm = (e) => {
         const form = { ...userForm };
@@ -77,6 +76,7 @@ export default function Register(props) {
         const { firstName, lastName, phone, email, password } = userForm;
         let username = email
         let phone_number = '+1' + phone
+
         try {
             const signUpResponse = await Auth.signUp({
                 username,
@@ -88,7 +88,7 @@ export default function Register(props) {
                 }
             });
             console.log(signUpResponse);
-            setPage(true)
+            setPage('success')
         } catch (error) {
             setCogMsg(error)
             console.log(cogMsg)
@@ -107,25 +107,28 @@ export default function Register(props) {
             setErrorMsg(msg)
             return
         }
+
         if (!userForm.lastName) {
             msg.lastName = 'Please enter your last name'
             isValid = false
             setErrorMsg(msg)
             return
         }
+
         if (!validateEmail(userForm.email)) {
-            console.log(validateEmail(userForm.email))
             msg.email = 'Please enter an e-mail'
             isValid = false
             setErrorMsg(msg)
             return
         }
+
         if (!userForm.phone) {
             msg.phone = 'Please enter your phone number'
             isValid = false
             setErrorMsg(msg)
             return
         }
+
         if (!validatePass(userForm.password, 8)) {
             msg.password = 'Password must be at least 8 characters'
             isValid = false
@@ -139,9 +142,12 @@ export default function Register(props) {
         }
     }
 
+    const handleLoginPageSwitch = () => {
+        setPage('login')
+    }
+
     const handlePageChange = () => {
-        //If false, shows register fields, if true, moves to Checklist
-        if (page === false) {
+        if (page === null) {
             return (
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -232,7 +238,13 @@ export default function Register(props) {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <p>DISCLAIMER: All information gathered will be kept confidential and deleted after a 6 week period.</p>
+                                    <Typography className={classes.disclaimer}
+                                        variant='subtitle2'
+                                        color="textSecondary"
+                                    >
+                                        DISCLAIMER: All information gathered will be kept confidential
+                                        and deleted after a 6 week period.
+                                        </Typography>
                                 </Grid>
                             </Grid>
                             <Button
@@ -248,9 +260,9 @@ export default function Register(props) {
             </Button>
                             <Grid container justify="flex-end">
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Button onClick={handleLoginPageSwitch}>
                                         Already have an account? Sign in
-                </Link>
+                </Button>
                                 </Grid>
                             </Grid>
                         </form>
@@ -259,9 +271,14 @@ export default function Register(props) {
                 </Container>
             )
         }
-        if (page === true) {
+        if (page === 'success') {
             return (
                 <Confirmation onChecklistSuccess={props.onChecklistSuccess} />
+            )
+        }
+        if (page === 'login') {
+            return (
+                <Login onChecklistSuccess={props.onChecklistSuccess} />
             )
         }
     }
@@ -272,158 +289,3 @@ export default function Register(props) {
         </div>
     )
 }
-
-
-// Old return stuff
-
-    // const handleSubmit = async() => {
-    //   const { firstName, lastName, ...form } = userForm;
-    //   form.fullName = `${firstName} ${lastName}`;
-    //   let test = { message: '', firstName: '', lastName: '', email: '', phone: '', password: '' }
-    //   let isValid = true
-
-    //   if (!userForm.firstName) {
-    //     test.firstName = 'Please enter your first name'
-    //     isValid = false
-    //   }
-    //   if (!userForm.lastName) {
-    //     test.lastName = 'Please enter your last name'
-    //     isValid = false
-    //   }
-    //   if (!validateEmail(userForm.email)) {
-    //     console.log('validating email')
-    //     console.log(validateEmail(userForm.email))
-    //     test.email = 'Please enter an e-mail'
-    //     isValid = false
-    //   }
-    //   if (!userForm.phone) {
-    //     test.phone = 'Please enter your phone number'
-    //     isValid = false
-    //   }
-    //   if (!validatePass(userForm.password, 8)) {
-    //     test.password = 'Password must be at least 8 characters'
-    //     isValid = false
-    //   }
-    //   setErrorMsg(test)
-    //   if (isValid) {
-    //     let data;
-    //     data = await postData(postUrl, form);
-    //     console.log(data['email']);
-    //     props.onLoginSuccess(data);
-    //   }
-    // };
-
-    // return (
-        // <Container component="main" maxWidth="xs">
-        //   <CssBaseline />
-        //   <div className={classes.paper}>
-        //     <Avatar className={classes.avatar}>
-        //       <LockOutlinedIcon />
-        //     </Avatar>
-        //     <Typography component="h1" variant="h5">
-        //       Sign up
-        //     </Typography>
-        //     <p>{cogMsg.message}</p>
-        //     <form
-        //       className={classes.form}
-        //       noValidate
-        //       onChange={handleForm}
-        //     >
-        //       <Grid container spacing={2}>
-        //         <Grid item xs={12} sm={6}>
-        //           <TextField
-        //             autoComplete="fname"
-        //             name="firstName"
-        //             variant="outlined"
-        //             required
-        //             fullWidth
-        //             id="firstName"
-        //             label="First Name"
-        //             autoFocus
-        //             error={errorMsg.firstName ? true : false}
-        //             helperText={errorMsg.firstName}
-        //           />
-        //         </Grid>
-        //         <Grid item xs={12} sm={6}>
-        //           <TextField
-        //             variant="outlined"
-        //             required
-        //             fullWidth
-        //             id="lastName"
-        //             label="Last Name"
-        //             name="lastName"
-        //             autoComplete="lname"
-        //             error={errorMsg.lastName ? true : false}
-        //             helperText={errorMsg.lastName}
-        //           />
-        //         </Grid>
-        //         <Grid item xs={12}>
-        //           <TextField
-        //             variant="outlined"
-        //             required
-        //             fullWidth
-        //             id="email"
-        //             label="Email Address"
-        //             name="email"
-        //             autoComplete="email"
-        //             error={errorMsg.email ? true : false}
-        //             helperText={errorMsg.email}
-        //           />
-        //         </Grid>
-        //         <Grid item xs={12}>
-        //           <TextField
-        //             variant="outlined"
-        //             required
-        //             fullWidth
-        //             id="phone"
-        //             label="Phone Number"
-        //             name="phone"
-        //             autoComplete="phone"
-        //             error={errorMsg.phone ? true : false}
-        //             helperText={errorMsg.phone}
-        //           />
-        //         </Grid>
-        //         <Grid item xs={12}>
-        //           <TextField
-        //             variant="outlined"
-        //             required
-        //             fullWidth
-        //             name="password"
-        //             label="Password"
-        //             type="password"
-        //             id="password"
-        //             autoComplete="current-password"
-        //             error={errorMsg.password ? true : false}
-        //             helperText={errorMsg.password}
-        //           />
-        //         </Grid>
-        //         <Grid item xs={12}>
-        //           <FormControlLabel
-        //             control={<Checkbox value="allowExtraEmails" color="primary" />}
-        //             label="I want to receive inspiration, marketing promotions and updates via email."
-        //           />
-        //         </Grid>
-        //       </Grid>
-        //       <Button
-        //         type="button"
-        //         fullWidth
-        //         variant="contained"
-        //         color="primary"
-        //         className={classes.submit}
-        //         onClick={handleSubmit}
-        //       >
-        //         Sign Up
-        //       </Button>
-        //       <Grid container justify="flex-end">
-        //         <Grid item>
-        //           <Link href="#" variant="body2">
-        //             Already have an account? Sign in
-        //           </Link>
-        //         </Grid>
-        //       </Grid>
-        //     </form>
-        //   </div>
-        //   <Box mt={5} />
-        // </Container>
-    // );
-// }

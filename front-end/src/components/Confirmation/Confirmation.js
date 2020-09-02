@@ -14,12 +14,13 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        textAlign: 'center'
     },
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
     },
-    form: {
+    message: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
@@ -46,7 +47,7 @@ export default function Confirmation(props) {
                         <Avatar className={classes.avatar}>
                             <LockOutlinedIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Typography className={classes.message} component="h1" variant="h5">
                             Please confirm your e-mail! A verification link as been sent.
                         </Typography>
                         <Button
