@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Auth } from "aws-amplify";
-import { useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Box, Grid, TextField, CssBaseline, Button, Avatar } from '@material-ui/core';
@@ -29,10 +29,12 @@ const useStyles = makeStyles((theme) => ({
     updateBtn: {
         margin: theme.spacing(3, 0, 2),
     },
+    passChangedMsg: {
+        textAlign: 'center'
+    }
 }));
 
 export default function UserPage(props) {
-    const history = useHistory();
     const classes = useStyles();
 
     const name = props.userData['body']['body'].first_name + ' '
@@ -136,7 +138,9 @@ export default function UserPage(props) {
     const updatedMessageDisply = () => {
         if (successMessage === true){
             return ( 
-                <p>Your Password has been updated successfully</p>
+                <Typography className={classes.passChangedMsg} variant='subtitle2'>
+                    Your password has been updated successfully 
+                </Typography>
             )
         }
     }
